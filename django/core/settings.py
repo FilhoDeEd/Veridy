@@ -38,6 +38,7 @@ DEFAULT_APPS = [
 ]
 
 PROJECT_APPS = [
+    'common',
     'interface'
 ]
 
