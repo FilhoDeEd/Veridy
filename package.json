@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.3.5",
+    "sass": "^1.87.0"
+  },
+  "scripts": {
+    "sass:watch": "npx sass --watch ./theme.scss django/common/static/css/bootstrap.custom.css --no-source-map"
+  }
+}
