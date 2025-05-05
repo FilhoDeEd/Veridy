@@ -5,13 +5,24 @@
     --sidebar-width-collapsed: 5rem;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 .sidebar {
     width: var(--sidebar-width);
-    min-height: 100vh;
-    background: linear-gradient(135deg, var(--teal-primary) 0%, var(--teal-secondary) 100%);
-    transition: all 0.3s ease;
-    position: relative;
+    background: linear-gradient(135deg, var(--teal-primary), var(--teal-secondary));
     overflow-y: auto;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.sidebar .nav {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 2rem;
 }
 
 .sidebar.collapsed {
@@ -52,4 +63,9 @@
 
 .collapsed .sidebar-link i {
     margin: 0 !important;
+}
+
+.main-content {
+    height: 100%;
+    overflow-y: auto;
 }
