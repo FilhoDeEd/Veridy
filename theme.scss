@@ -24,18 +24,18 @@ $teal:    #20c997 !default;
 $cyan:    #2fa4e7 !default;
 
 $blue-primary: #81d4fa !default;
-$blue-secondary: #9addfb !default;
+$blue-secondary: #4fb4d6 !default;
 
 $gray-text: #5a5d72 !default;
 
 $primary:       $blue-primary !default;
-// $secondary:     $gray-200 !default;
+$secondary: $blue-secondary !default;
 // $success:       $green !default;
 // $info:          $blue !default;
 // $warning:       $yellow !default;
 // $danger:        $red !default;
 // $light:         $gray-100 !default;
-// $dark:          $gray-800 !default;
+$dark:          $gray-800 !default;
 
 // $min-contrast-ratio:   2.75 !default;
 
