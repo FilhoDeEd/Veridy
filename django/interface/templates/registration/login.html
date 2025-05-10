@@ -3,7 +3,7 @@
 {% block title_append %}Login{% endblock %}
 {% block breadcrumb %}{% endblock %}
 {% block content %}
-<div class="d-flex align-items-center justify-content-center">
+<div class="d-flex justify-content-center align-items-center my-4">
     <div class="card border-0 shadow-lg col-11 col-md-8 col-lg-4">
         <div class="bg-primary py-2 rounded-top"></div>
 
@@ -12,8 +12,17 @@
 
             <form method="post">
                 {% csrf_token %}
-                <div class="mb-4">
-                    {{ form|crispy }}
+
+                {{ form.username|as_crispy_field }}
+
+                <div class="mb-3">
+                    <label for="{{ form.password.id_for_label }}" class="form-label">Senha*</label>
+                    <div class="input-group" id="show_hide_password">
+                        <input type="password" name="password" class="form-control" id="id_password">
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+                            <i class="fa fa-eye-slash" id="toggleIcon" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="text-center mb-4">
@@ -38,4 +47,21 @@
         <div class="bg-primary py-1 rounded-bottom"></div>
     </div>
 </div>
+
+<script>
+    function togglePassword() {
+        const input = document.getElementById("id_password");
+        const icon = document.getElementById("toggleIcon");
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        }
+    }
+</script>
 {% endblock %}
