@@ -1,23 +1,61 @@
+<!-- Sidebar -->
 <div class="offcanvas offcanvas-start bg-primary" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title theme-inverse" id="sidebarLabel">Veridy</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <ul class="nav flex-column">
-            <li class="nav-item mb-2">
-                <a class="nav-link theme-inverse d-flex align-items-center" href="#">
-                    <svg class="bi me-2" width="1em" height="1em"><use href="#home-icon" /></svg>
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item mb-2">
-                <a class="nav-link theme-inverse d-flex align-items-center" href="#">
-                    <svg class="bi me-2" width="1em" height="1em"><use href="#cert-icon" /></svg>
-                    Certificados
-                </a>
-            </li>
-            <!-- Mais itens... -->
-        </ul>
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between px-3 py-2 mt-2">
+            <button type="button" class="btn p-0 theme-inverse" data-bs-dismiss="offcanvas" aria-label="Close">
+                <i class="fas fa-times fa-lg"></i>
+            </button>
+            <h5 class="offcanvas-title theme-inverse mb-0 ms-2" id="sidebarLabel">Veridy</h5>
+        </div>
+
+        <hr class="section-divider theme-inverse">
+
+        <div class="offcanvas-body p-0">
+            <div class="sections-container">
+                <!-- Seção Instituições -->
+                <div class="section">
+                    <h6 class="section-title theme-inverse">INSTITUIÇÕES</h6>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="sidebar-link theme-inverse" href="#">
+                                <i class="fas fa-tachometer-alt me-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <hr class="nav-divider theme-inverse">
+                        <li class="nav-item">
+                            <a class="sidebar-link theme-inverse" href="#">
+                                <i class="fas fa-university me-2"></i>
+                                Instituições
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <hr class="section-divider theme-inverse">
+
+                <!-- Seção Documentos -->
+                <div class="section">
+                    <h6 class="section-title theme-inverse">DOCUMENTOS</h6>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="sidebar-link theme-inverse" href="#">
+                                <i class="fas fa-certificate me-2"></i>
+                                Certificados
+                            </a>
+                        </li>
+                        <hr class="nav-divider theme-inverse">
+                        <li class="nav-item">
+                            <a class="sidebar-link theme-inverse" href="#">
+                                <i class="fas fa-file-contract me-2"></i>
+                                Contratos
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Adicione mais seções aqui... -->
+            </div>
+        </div>
     </div>
 </div>
