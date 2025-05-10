@@ -1,10 +1,5 @@
 html, body {
     margin: 0;
-    overflow: hidden;
-}
-
-.main-content {
-    overflow-y: auto;
 }
 
 :root {

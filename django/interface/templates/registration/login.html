@@ -1,47 +1,41 @@
-{% load static %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veridy | Login</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.custom.css' %}">
-    <style>
-        .left-panel {
-            width: 65%;
-            background: url("{% static 'img/blue_bg.jpg' %}") center center / cover no-repeat;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <div class="d-flex vh-100">
-        <div class="left-panel d-flex flex-column justify-content-between p-5">
-            <div class="d-flex align-items-center">
-                <img src="{% static 'img/logo.png' %}" alt="Logo Veridy" height="48" class="me-2">
-                <h4 class="m-0">Veridy</h4>
-            </div>
-            <div class="my-auto">
-                <h1 class="display-4 fw-bold">Bem-vindos ao futuro da certificação digital</h1>
-                <p class="fs-4">Confiança e transparência em cada documento</p>
+{% block title_append %}Login{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-center">
+    <div class="card border-0 shadow-lg col-11 col-md-8 col-lg-4">
+        <div class="bg-primary py-2 rounded-top"></div>
+
+        <div class="card-body p-4 mb-4">
+            <h2 class="text-center mb-4 mt-2 text-body">Login</h2>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    {{ form|crispy }}
+                </div>
+
+                <div class="text-center mb-4">
+                    <a href="#" class="text-decoration-none link-primary link-offset-2-hover">
+                        Esqueceu sua senha?
+                    </a>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+                    Entrar
+                </button>
+            </form>
+
+            <div class="text-center mt-4 pt-3">
+                <span class="text-body-tertiary">Não possui uma conta?</span>
+                <a href="#" class="text-decoration-none link-primary link-offset-2-hover ms-1">
+                    Cadastre-se
+                </a>
             </div>
         </div>
 
-        <div class="d-flex align-items-center justify-content-center" style="background-color: #ffffff; width: 35%;">
-            <div class="card border-0 shadow-sm p-4 rounded-4 mx-4 bg-primary">
-                <h2 class="text-center mb-2">Login</h2>
-                <p class="text-center mb-4">Entre com seu usuário e senha</p>
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <div class="text-center mt-3 mb-4">
-                        <a href="#" class="text-decoration-none">Esqueceu sua senha?</a>
-                    </div>
-                    <button type="submit" class="btn btn-dark w-100">Login</button>
-                </form>
-            </div>
-        </div>
+        <div class="bg-primary py-1 rounded-bottom"></div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

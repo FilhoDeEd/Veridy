@@ -54,12 +54,17 @@
                     </svg>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end text-small shadow">
+                    {% if user.is_authenticated %}
                     <li><a class="dropdown-item" href="#">Perfil</a></li>
                     <li><a class="dropdown-item" href="#">Configurações</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li><a class="dropdown-item" href="#">Sair</a></li>
+                    {% else %}
+                    <li><a class="dropdown-item" href="#">Cadastrar</a></li>
+                    <li><a class="dropdown-item" href="{% url 'login' %}">Fazer Login</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
