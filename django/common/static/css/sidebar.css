@@ -1,5 +1,14 @@
 #sidebar {
-    width: 16rem;
+    width: 20rem;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar .offcanvas-body {
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: calc(85vh);
 }
 
 .sidebar-link {
