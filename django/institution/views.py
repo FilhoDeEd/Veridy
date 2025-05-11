@@ -1,11 +1,22 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from .forms import InstitutionRegistrationForm
 from .models import Institution, LegalRepresentative
+
+
+class InstitutionProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'institution_profille.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['institution'] = self.request.user.institution
+        return self.render_to_response(context)
 
 
 class InstitutionRegistrationView(FormView):

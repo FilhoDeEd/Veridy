@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title_append %}Perfil da Instituição{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+    <a href="{% url 'home' %}" class="text-dark">
+        <i class="fas fa-home"></i>
+    </a>
+</li>
+<li class="breadcrumb-item active" aria-current="page">
+    Perfil da Instituição
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="row align-items-center mb-4">
+    <div class="col">
+        <h2>Perfil da Instituição</h2>
+    </div>
+    <div class="col-auto">
+        <a href="javascript:history.back()" class="btn btn-info">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <strong>Informações da Instituição</strong>
+        <a href="#" class="btn btn-link btn-md position-absolute end-0 top-0 me-1" title="Editar Informações">
+            <i class="fas fa-edit"></i>
+        </a>
+    </div>
+    <div class="card-body">
+        <p><strong>Nome:</strong> {{ institution.name }}</p>
+        <p><strong>CNPJ:</strong> {{ institution.tax_id }}</p>
+        <p><strong>Domínio:</strong> {{ institution.domain }}</p>
+        <p><strong>E-mail institucional:</strong> {{ institution.institutional_email }}</p>
+        <p><strong>Telefone:</strong> {{ institution.phone }}</p>
+        <p><strong>Endereço completo:</strong> {{ institution.full_address }}</p>
+        <p><strong>Cidade:</strong> {{ institution.city }}</p>
+        <p><strong>Estado:</strong> {{ institution.state }}</p>
+        <p><strong>País:</strong> {{ institution.country }}</p>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <strong>Representante Legal</strong>
+    </div>
+    <div class="card-body">
+        <p><strong>Nome:</strong> {{ institution.representative.name }}</p>
+        <p><strong>Cargo:</strong> {{ institution.representative.role }}</p>
+        <p><strong>E-mail:</strong> {{ institution.representative.email }}</p>
+        <p><strong>Telefone:</strong> {{ institution.representative.phone }}</p>
+    </div>
+</div>
+
+<a href="#" class="btn btn-warning">Editar Dados</a>
+{% endblock %}
