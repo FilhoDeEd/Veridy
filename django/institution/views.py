@@ -29,7 +29,7 @@ class InstitutionRegistrationView(FormView):
         institutional_email = data.get('institutional_email')
 
         if Institution.objects.filter(institutional_email=institutional_email).exists():
-            form.add_error('email', 'Uma instituição com este e-mail já está cadastrada.')
+            form.add_error('institutional_email', 'Uma instituição com este e-mail já está cadastrada.')
             return self.form_invalid(form)
 
         try:
