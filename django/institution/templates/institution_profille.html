@@ -27,7 +27,7 @@
 <div class="card mb-3">
     <div class="card-header">
         <strong>Informações da Instituição</strong>
-        <a href="#" class="btn btn-link btn-md position-absolute end-0 top-0 me-1" title="Editar Informações">
+        <a href="{% url 'institution_edit' %}" class="btn btn-link btn-md position-absolute end-0 top-0 me-1" title="Editar Informações">
             <i class="fas fa-edit"></i>
         </a>
     </div>
@@ -56,5 +56,5 @@
     </div>
 </div>
 
-<a href="#" class="btn btn-warning">Editar Dados</a>
+<a href="{% url 'institution_edit' %}" class="btn btn-warning">Editar Dados</a>
 {% endblock %}

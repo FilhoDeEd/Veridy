@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from .forms import InstitutionRegistrationForm
+from .forms import InstitutionRegistrationForm, InstitutionEditForm
 from .models import Institution, LegalRepresentative
 
 
@@ -69,4 +69,36 @@ class InstitutionRegistrationView(FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
+        return super().form_invalid(form)
+
+
+class InstitutionEditView(LoginRequiredMixin, FormView):
+    template_name = 'institution_edit.html'
+    form_class = InstitutionEditForm
+    success_url = reverse_lazy('institution_profile')  # Atualize com sua URL
+
+    def get_form_kwargs(self):
+        form_kwargs = super().get_form_kwargs()
+        self.institution = self.request.user.institution
+        form_kwargs.update({'instance': self.institution})
+        return form_kwargs
+
+    def form_valid(self, form: InstitutionEditForm):
+        institutional_email = form.cleaned_data.get('institutional_email')
+
+        if Institution.objects.filter(institutional_email=institutional_email).exclude(id=self.institution.id).exists():
+            form.add_error('institutional_email', 'Uma instituição com este e-mail já está cadastrada.')
+            return self.form_invalid(form)
+
+        tax_id = form.cleaned_data.get('tax_id')
+        if Institution.objects.filter(tax_id=tax_id).exclude(id=self.institution.id).exists():
+            form.add_error('tax_id', 'Uma instituição com este CNPJ já está cadastrada.')
+            return self.form_invalid(form)
+
+        form.save()
+        messages.success(self.request, 'Dados da instituição atualizados com sucesso!')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Por favor, corrija os erros abaixo.')
         return super().form_invalid(form)

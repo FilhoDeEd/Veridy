@@ -3,6 +3,17 @@
 {% block title_append %}Login{% endblock %}
 {% block breadcrumb %}{% endblock %}
 {% block content %}
+<style>
+    .form-check-label {
+        cursor: pointer;
+        user-select: none;
+    }
+    
+    .form-check-input:checked {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+</style>
 <div class="d-flex justify-content-center align-items-center my-4">
     <div class="card border-0 shadow-lg col-11 col-md-8 col-lg-4">
         <div class="bg-primary py-2 rounded-top"></div>
@@ -49,7 +60,7 @@
     function togglePassword() {
         const passwordField = document.querySelector('#id_password');
         const toggleIcon = document.querySelector('#toggleIcon');
-        
+
         if (passwordField.type === "password") {
             passwordField.type = "text";
             toggleIcon.classList.replace('fa-eye-slash', 'fa-eye');
@@ -59,11 +70,10 @@
         }
     }
 
-    // Adiciona verificação inicial
     document.addEventListener('DOMContentLoaded', () => {
         const passwordField = document.querySelector('#id_password');
         const toggleIcon = document.querySelector('#toggleIcon');
-        
+
         if (passwordField && toggleIcon) {
             passwordField.type = "password";
             toggleIcon.classList.add('fa-eye-slash');

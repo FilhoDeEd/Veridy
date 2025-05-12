@@ -25,7 +25,7 @@ class LegalRepresentative(models.Model):
 class Institution(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-    tax_id = models.CharField(max_length=50)
+    tax_id = models.CharField(max_length=50, unique=True)
     domain = models.CharField(max_length=255, help_text="e.g., example.edu.br")
     institutional_email = models.EmailField()
     phone = models.CharField(max_length=20)
