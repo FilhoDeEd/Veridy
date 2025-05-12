@@ -60,7 +60,12 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#">Sair</a></li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item text-danger">Sair</button>
+                        </form>
+                    </li>
                     {% else %}
                     <li><a class="dropdown-item" href="{% url 'institution_registration' %}">Cadastrar</a></li>
                     <li><a class="dropdown-item" href="{% url 'login' %}">Fazer Login</a></li>

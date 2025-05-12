@@ -3,6 +3,35 @@
 {% block title_append %}Login{% endblock %}
 {% block breadcrumb %}{% endblock %}
 {% block content %}
+<style>
+    .login-form .input-group input {
+        border-right: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .login-form .input-group button {
+        border-left: none;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-color: var(--bs-border-color);
+    }
+
+    .login-form .input-group input:focus {
+        box-shadow: none;
+    }
+
+    .login-form .input-group:focus-within {
+        box-shadow: 0 0 0 0.25rem rgba(115, 199, 238, 0.25);
+        border-radius: 0.375rem;
+    }
+
+    .login-form .input-group:focus-within input,
+    .login-form .input-group:focus-within button {
+        border-color: rgb(185, 227, 246.5);
+    }
+</style>
+
 <div class="d-flex justify-content-center align-items-center my-4">
     <div class="card border-0 shadow-lg col-11 col-md-8 col-lg-4">
         <div class="bg-primary py-2 rounded-top"></div>
@@ -10,7 +39,7 @@
         <div class="card-body p-4 mb-4">
             <h2 class="text-center mb-4 mt-2 text-body">Login</h2>
 
-            <form method="post">
+            <form method="post" class="login-form">
                 {% csrf_token %}
 
                 {{ form.username|as_crispy_field }}
