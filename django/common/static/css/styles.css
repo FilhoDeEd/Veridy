@@ -1,47 +1,56 @@
 :root {
-    --dark-black: #212529;
-    --light-white: #f8f9fa;
+	--dark-black: #212529;
+	--light-white: #f8f9fa;
 
-    --hover-inverse-light: #e0e0e0;
-    --active-inverse-light: #d6d6d6;
-    --focus-inverse-light: #cccccc;
-    
-    --hover-inverse-dark: #343a40;
-    --active-inverse-dark: #495057;
-    --focus-inverse-dark: #5a5a5a;
+	--hover-inverse-light: #e0e0e0;
+	--active-inverse-light: #d6d6d6;
+	--focus-inverse-light: #cccccc;
+
+	--hover-inverse-dark: #343a40;
+	--active-inverse-dark: #495057;
+	--focus-inverse-dark: #5a5a5a;
 }
 
 .theme-inverse {
-    color: var(--light-white);
-    transition: color 0.2s ease;
+	color: var(--light-white);
+	transition: color 0.2s ease;
 }
 
 .theme-inverse:hover {
-    color: var(--hover-inverse-light);
+	color: var(--hover-inverse-light);
 }
 
 .theme-inverse:active {
-    color: var(--active-inverse-light);
+	color: var(--active-inverse-light);
 }
 
 .theme-inverse:focus {
-    color: var(--focus-inverse-light);
-    outline: none;
+	color: var(--focus-inverse-light);
+	outline: none;
 }
 
-[data-bs-theme="dark"] .theme-inverse {
-    color: var(--dark-black);
+[data-bs-theme='dark'] .theme-inverse {
+	color: var(--dark-black);
 }
 
-[data-bs-theme="dark"] .theme-inverse:hover {
-    color: var(--hover-inverse-dark);
+[data-bs-theme='dark'] .theme-inverse:hover {
+	color: var(--hover-inverse-dark);
 }
 
-[data-bs-theme="dark"] .theme-inverse:active {
-    color: var(--active-inverse-dark);
+[data-bs-theme='dark'] .theme-inverse:active {
+	color: var(--active-inverse-dark);
 }
 
-[data-bs-theme="dark"] .theme-inverse:focus {
-    color: var(--focus-inverse-dark);
-    outline: none;
+[data-bs-theme='dark'] .theme-inverse:focus {
+	color: var(--focus-inverse-dark);
+	outline: none;
+}
+
+.btn-brand {
+	background-color: #3f8ca8;
+	border: none;
+}
+
+.no-caret::after {
+	display: none;
 }
