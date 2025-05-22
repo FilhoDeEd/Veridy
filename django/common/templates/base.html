@@ -1,3 +1,4 @@
+<!-- prettier-ignore -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="light">
@@ -18,10 +19,11 @@
 		<link rel="stylesheet" href="{% static 'css/header.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
 	</head>
-
 	<body>
 		<div class="d-flex flex-column min-vh-100">
-			{% include './components/header.html' %} {% include './components/sidebar.html' %}
+			<!-- prettier-ignore -->
+			{% include './components/header.html' %}
+			{% include './components/sidebar.html' %}
 			<main role="main" class="container flex-grow-1 my-4">
 				{% if messages %}
 				<div class="container mt-4">
@@ -41,7 +43,9 @@
 						{% endblock %}
 					</ol>
 				</nav>
-				{% block content %} {% endblock %}
+				<!-- prettier-ignore -->
+				{% block content %}
+				{% endblock %}
 			</main>
 			<footer class="footer mt-auto py-1 bg-primary">
 				<div class="container text-center">
@@ -54,7 +58,9 @@
 				crossorigin="anonymous"></script>
 			<script src="{% static 'js/script.js' %}"></script>
 			<script src="{% static 'js/color_mode_toggler.js' %}"></script>
-			{% block script %} {% endblock %}
+			<!-- prettier-ignore -->
+			{% block script %}
+			{% endblock %}
 		</div>
 	</body>
 </html>
