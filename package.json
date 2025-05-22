@@ -4,6 +4,7 @@
     "sass": "^1.87.0"
   },
   "scripts": {
+    "sass:run": "npx sass ./theme.scss django/common/static/css/bootstrap.custom.css --no-source-map",
     "sass:watch": "npx sass --watch ./theme.scss django/common/static/css/bootstrap.custom.css --no-source-map"
   }
 }
