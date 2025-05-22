@@ -54,3 +54,16 @@
 .no-caret::after {
 	display: none;
 }
+
+.breadcrumb-link {
+	text-decoration: none;
+	color: #555;
+	font-weight: 500;
+	transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.breadcrumb-link:hover,
+.breadcrumb-link:focus {
+	color: #73c7ee;
+	text-decoration: underline;
+}

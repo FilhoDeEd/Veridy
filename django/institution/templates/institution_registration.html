@@ -1,114 +1,74 @@
+<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-
 {% block title_append %}Cadastrar Instituição{% endblock %}
-
 {% block breadcrumb %}
 <li class="breadcrumb-item">
-    <a href="{% url 'home' %}" class="text-dark">
-        <i class="fas fa-home"></i>
-    </a>
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
 </li>
 <li class="breadcrumb-item">
-    <a href="#" class="text-dark">Instituições</a>
+	<a href="#" class="breadcrumb-link">Instituições</a>
 </li>
-<li class="breadcrumb-item active" aria-current="page">
-    Cadastrar
+<li class="breadcrumb-item">
+	<a href="{% url 'institution_registration' %}" class="breadcrumb-link" aria-current="page">Cadastrar</a>
 </li>
+<!-- prettier-ignore -->
 {% endblock %}
-
 {% block content %}
 <div class="row align-items-center mb-4">
-    <div class="col">
-        <h2>Cadastrar Instituição</h2>
-    </div>
-    <div class="col-auto">
-        <a href="javascript:history.back()" class="btn btn-info">
-            <i class="fas fa-arrow-left"></i> Voltar
-        </a>
-    </div>
+	<div class="col">
+		<h2>Cadastrar Instituição</h2>
+	</div>
+	<div class="col-auto">
+		<a href="javascript:history.back()" class="btn btn-info"> <i class="fas fa-arrow-left"></i> Voltar</a>
+	</div>
 </div>
-
 <form method="post">
-    {% csrf_token %}
-
-    <fieldset class="border border-secondary rounded p-3 mb-4">
-        <legend class="text-secondary">Dados da Instituição</legend>
-        <div class="row">
-            <div class="col-md-6">
-                {{ form.name|as_crispy_field }}
-            </div>
-            <div class="col-md-6">
-                {{ form.tax_id|as_crispy_field }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                {{ form.domain|as_crispy_field }}
-            </div>
-            <div class="col-md-6">
-                {{ form.institutional_email|as_crispy_field }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                {{ form.phone|as_crispy_field }}
-            </div>
-            <div class="col-md-6">
-                {{ form.full_address|as_crispy_field }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                {{ form.city|as_crispy_field }}
-            </div>
-            <div class="col-md-4">
-                {{ form.state|as_crispy_field }}
-            </div>
-            <div class="col-md-4">
-                {{ form.country|as_crispy_field }}
-            </div>
-        </div>
-    </fieldset>
-
-    <fieldset class="border border-secondary rounded p-3 mb-4">
-        <legend class="text-secondary">Representante Legal</legend>
-        <div class="row">
-            <div class="col-md-6">
-                {{ form.representative_name|as_crispy_field }}
-            </div>
-            <div class="col-md-6">
-                {{ form.representative_role|as_crispy_field }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                {{ form.representative_email|as_crispy_field }}
-            </div>
-            <div class="col-md-6">
-                {{ form.representative_phone|as_crispy_field }}
-            </div>
-        </div>
-    </fieldset>
-
-    <fieldset class="border border-secondary rounded p-3 mb-3">
-        <legend class="text-secondary">Dados do Usuário</legend>
-        <div class="row">
-            <div class="col-md-12">
-                {{ form.username|as_crispy_field }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                {{ form.password1|as_crispy_field }}
-            </div>
-            <div class="col-md-6">
-                {{ form.password2|as_crispy_field }}
-            </div>
-        </div>
-    </fieldset>
-
-    <button type="submit" class="btn btn-primary me-2">Cadastrar</button>
-    <a href="#" class="btn btn-danger">Cancelar</a>
+	{% csrf_token %}
+	<fieldset class="border rounded p-3 mb-4">
+		<legend>Dados da Instituição</legend>
+		<div class="row">
+			<div class="col-md-6">{{ form.name|as_crispy_field }}</div>
+			<div class="col-md-6">{{ form.tax_id|as_crispy_field }}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">{{ form.domain|as_crispy_field }}</div>
+			<div class="col-md-6">{{ form.institutional_email|as_crispy_field }}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">{{ form.phone|as_crispy_field }}</div>
+			<div class="col-md-6">{{ form.full_address|as_crispy_field }}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">{{ form.city|as_crispy_field }}</div>
+			<div class="col-md-4">{{ form.state|as_crispy_field }}</div>
+			<div class="col-md-4">{{ form.country|as_crispy_field }}</div>
+		</div>
+	</fieldset>
+	<fieldset class="border rounded p-3 mb-4">
+		<legend>Representante Legal</legend>
+		<div class="row">
+			<div class="col-md-6">{{ form.representative_name|as_crispy_field }}</div>
+			<div class="col-md-6">{{ form.representative_role|as_crispy_field }}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">{{ form.representative_email|as_crispy_field }}</div>
+			<div class="col-md-6">{{ form.representative_phone|as_crispy_field }}</div>
+		</div>
+	</fieldset>
+	<fieldset class="border rounded p-3 mb-3">
+		<legend>Dados do Usuário</legend>
+		<div class="row">
+			<div class="col-md-12">{{ form.username|as_crispy_field }}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">{{ form.password1|as_crispy_field }}</div>
+			<div class="col-md-6">{{ form.password2|as_crispy_field }}</div>
+		</div>
+	</fieldset>
+	<button type="submit" class="btn btn-primary me-2">Cadastrar</button>
+	<a href="#" class="btn btn-danger">Cancelar</a>
 </form>
 {% endblock %}
