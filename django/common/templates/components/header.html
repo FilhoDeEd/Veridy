@@ -11,12 +11,12 @@
 	<div class="row justify-content-between align-items-center">
 		<div class="col-12 col-md-2 d-flex justify-content-start align-items-center gap-2">
 			<button
-				class="btn border-0 theme-inverse btn-hover-circle"
+				class="btn border-0 btn-hover-round"
 				type="button"
 				data-bs-toggle="offcanvas"
 				data-bs-target="#sidebar"
 				aria-controls="sidebar">
-				<i class="fas fa-bars"></i>
+				<i class="fas fa-bars theme-inverse"></i>
 			</button>
 			<a
 				href="{% url 'home' %}"
@@ -50,15 +50,11 @@
 		</div>
 		<div class="col-12 col-md-2 d-flex justify-content-end align-items-center gap-2">
 			{% include './color_mode_toggler.html' %}
-			<button class="btn border-0 theme-inverse btn-hover-circle" type="button">
-				<i class="fas fa-bell fa-lg"></i>
+			<button class="btn border-0 btn-hover-round" type="button">
+				<i class="fas fa-bell fa-lg theme-inverse"></i>
 			</button>
 			<div class="dropdown">
-				<button
-					class="btn border-0 theme-inverse btn-hover-circle"
-					type="button"
-					data-bs-toggle="dropdown"
-					aria-expanded="false">
+				<button class="btn border-0 btn-hover-round" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 					<svg class="bi theme-inverse" width="1.5em" height="1.5em">
 						<use href="#no-user-icon"></use>
 					</svg>
