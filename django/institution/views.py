@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from .forms import InstitutionRegistrationForm, InstitutionEditForm
+from .forms import InstitutionRegistrationForm, InstitutionEditForm, LegalRepresentativeForm
 from .models import Institution, LegalRepresentative
 
 
@@ -75,7 +75,7 @@ class InstitutionRegistrationView(FormView):
 class InstitutionEditView(LoginRequiredMixin, FormView):
     template_name = 'institution_edit.html'
     form_class = InstitutionEditForm
-    success_url = reverse_lazy('institution_profile')  # Atualize com sua URL
+    success_url = reverse_lazy('institution_profile')
 
     def get_form_kwargs(self):
         form_kwargs = super().get_form_kwargs()
@@ -97,6 +97,28 @@ class InstitutionEditView(LoginRequiredMixin, FormView):
 
         form.save()
         messages.success(self.request, 'Dados da instituição atualizados com sucesso!')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Por favor, corrija os erros abaixo.')
+        return super().form_invalid(form)
+    
+
+class LegalRepresentativeEditView(LoginRequiredMixin, FormView):
+    template_name = 'legal_representative_edit.html'
+    form_class = LegalRepresentativeForm
+    success_url = reverse_lazy('institution_profile')
+
+    def get_form_kwargs(self):
+        form_kwargs = super().get_form_kwargs()
+        self.institution = self.request.user.institution
+        self.representative = self.institution.representative
+        form_kwargs.update({'instance': self.representative})
+        return form_kwargs
+
+    def form_valid(self, form: LegalRepresentativeForm):
+        form.save()
+        messages.success(self.request, 'Dados do responsável legal atualizados com sucesso!')
         return super().form_valid(form)
 
     def form_invalid(self, form):

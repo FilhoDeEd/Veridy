@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from institution.models import Institution
+from institution.models import Institution, LegalRepresentative
 
 
 class InstitutionRegistrationForm(UserCreationForm):
@@ -108,3 +108,32 @@ class InstitutionEditForm(forms.ModelForm):
     def clean_tax_id(self):
         tax_id = self.cleaned_data.get('tax_id')
         return tax_id.replace('.', '').replace('/', '').replace('-', '') if tax_id else None
+    
+
+class LegalRepresentativeForm(forms.ModelForm):
+    name = forms.CharField(
+        label='Nome do Responsável Legal',
+        max_length=255,
+        widget=forms.TextInput(attrs={'placeholder': 'e.g. João Silva'})
+    )
+
+    role = forms.CharField(
+        label='Cargo',
+        max_length=255,
+        widget=forms.TextInput(attrs={'placeholder': 'e.g. Diretor'})
+    )
+
+    email = forms.EmailField(
+        label='E-mail',
+        widget=forms.EmailInput(attrs={'placeholder': 'e.g. joao.silva@example.com'})
+    )
+
+    phone = forms.CharField(
+        label='Telefone',
+        max_length=20,
+        widget=forms.TextInput(attrs={'placeholder': 'e.g. (11) 91234-5678'})
+    )
+
+    class Meta:
+        model = LegalRepresentative
+        fields = ['name', 'role', 'email', 'phone']
