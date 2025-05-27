@@ -26,6 +26,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'common.VeridyUser'
+
+AUTHENTICATION_BACKENDS = [
+    'common.backends.EmailOrUsernameBackend',
+    'django.contrib.auth.backends.ModelBackend'
+]
 
 DEFAULT_APPS = [
     'django.contrib.admin',

@@ -1,13 +1,15 @@
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.db import transaction
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from .forms import InstitutionRegistrationForm, InstitutionEditForm, LegalRepresentativeForm
-from .models import Institution, LegalRepresentative
+from institution.forms import InstitutionRegistrationForm, InstitutionEditForm, LegalRepresentativeForm
+from institution.models import Institution, LegalRepresentative
+
+UserModel = get_user_model()
 
 
 class InstitutionProfileView(LoginRequiredMixin, TemplateView):
@@ -22,21 +24,16 @@ class InstitutionProfileView(LoginRequiredMixin, TemplateView):
 class InstitutionRegistrationView(FormView):
     template_name = 'institution_registration.html'
     form_class = InstitutionRegistrationForm
-    success_url = reverse_lazy('home') #reverse_lazy('institution_list')
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form: InstitutionRegistrationForm):
         data = form.cleaned_data
-        institutional_email = data.get('institutional_email')
-
-        if Institution.objects.filter(institutional_email=institutional_email).exists():
-            form.add_error('institutional_email', 'Uma instituição com este e-mail já está cadastrada.')
-            return self.form_invalid(form)
 
         try:
             with transaction.atomic():
-                user = User.objects.create_user(
+                user = UserModel.objects.create_user(
                     username=data.get('username'),
-                    email=None,
+                    email=data.get('email'),
                     password=data.get('password1')
                 )
 
@@ -52,7 +49,6 @@ class InstitutionRegistrationView(FormView):
                     name=data.get('name'),
                     tax_id=data.get('tax_id'),
                     domain=data.get('domain'),
-                    institutional_email=data.get('institutional_email'),
                     phone=data.get('phone'),
                     city=data.get('city'),
                     state=data.get('state'),
