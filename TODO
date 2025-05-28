@@ -1,4 +1,70 @@
-#TODO
+# ✅ TODO - Veridy Platform
 
-Instituição:
-- [] Fazer página para ca
+## 🏛️ Instituição
+
+- [x] Página de cadastro
+- [x] Página de perfil
+  - [x] Página de edição dos dados
+- [x] Página para listar Instituições
+- [ ] Página pública para detalhar uma instituição específica
+- [ ] Página de verificação
+  - [ ] Instruções para rodar o servidor de verificação
+  - [ ] Botão para iniciar verificação
+  - [ ] Status atual da verificação
+  - [ ] Histórico de tentativas de verificação
+- [ ] Página de emissão de diplomas
+  - [ ] Formulário de emissão
+  - [ ] Upload opcional de PDF
+  - [ ] Controle de visibilidade (público/privado)
+- [ ] Página de diplomas emitidos
+  - [ ] Listagem com busca/filtro
+  - [ ] Acesso rápido para revogação ou visualização
+- [ ] Página de revogação de diplomas
+  - [ ] Formulário com motivo e confirmação
+
+---
+
+## 👤 Indivíduo
+
+- [ ] Página de cadastro
+- [ ] Página de login
+- [ ] Página de perfil
+  - [ ] Edição de dados pessoais
+    - [ ] Nome
+    - [ ] E-mail
+    - [ ] Foto de perfil
+    - [ ] Documento de identificação (se fornecido)
+  - [ ] Alerta sobre alteração de nome (caso tenha diplomas)
+- [ ] Página de visualização de diplomas
+  - [ ] Filtros por curso/instituição
+  - [ ] Controle de visibilidade de cada diploma
+- [ ] Página de solicitação de transferência de diploma
+
+---
+
+## 📜 Diploma
+
+- [ ] Página pública do diploma
+  - [ ] Exibição das informações do diploma
+  - [ ] Validação do hash
+  - [ ] Status: autêntico, revogado, não encontrado
+  - [ ] Acesso ao PDF (se público)
+- [ ] Página de verificação pública
+  - [ ] Busca por:
+    - [ ] Identificador
+    - [ ] Hash
+    - [ ] Link direto
+- [ ] Página de listagem pública de diplomas emitidos (transparência)
+- [ ] Página administrativa para logs de emissão/verificação
+
+---
+
+## ⚙️ Admin / Sistema
+
+- [ ] Página pública de instituições verificadas
+- [ ] Página de auditoria (privada ou semi-pública)
+  - [ ] Tentativas de verificação
+  - [ ] Emissões e revogações
+- [ ] Painel administrativo (opcional)
+  - [ ] Aprovar transferências de diploma
+  - [ ] Gerenciar usuários ou instituições (se necessário)

@@ -5,20 +5,36 @@ from django.db import transaction
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
+from django_filters.views import FilterView
 
 from institution.forms import InstitutionRegistrationForm, InstitutionEditForm, LegalRepresentativeForm
 from institution.models import Institution, LegalRepresentative
+from institution.filters import InstitutionFilter
+
 
 UserModel = get_user_model()
 
 
 class InstitutionProfileView(LoginRequiredMixin, TemplateView):
-    template_name = 'institution_profille.html'
+    template_name = 'institution_profile.html'
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         context['institution'] = self.request.user.institution
         return self.render_to_response(context)
+
+
+class InstitutionListView(FilterView):
+    model = Institution
+    template_name = 'institution_list.html'
+    filterset_class = InstitutionFilter
+    context_object_name = 'institutions'
+    ordering = ['name']
+    paginate_by = 12
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user__is_active=True)
 
 
 class InstitutionRegistrationView(FormView):

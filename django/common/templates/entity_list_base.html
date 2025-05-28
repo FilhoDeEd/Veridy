@@ -1,0 +1,44 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% block title_append %} Listagem {% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">Início</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% block breadcrumb_current %}Listagem{% endblock %}</li>
+<!-- prettier-ignore -->
+{% endblock %}
+{% block content %}
+<div class="row">
+	<aside class="col-md-3 mb-4">
+		<div class="list-group">
+			<a
+				href="{% url 'institution_list' %}"
+				class="list-group-item list-group-item-action {% if entity_type == 'institutions' %}active{% endif %}">
+				<i class="bi bi-building"></i> Instituições
+			</a>
+			<a href="#" class="list-group-item list-group-item-action {% if entity_type == 'diplomas' %}active{% endif %}">
+				<i class="bi bi-file-earmark-text"></i> Diplomas
+			</a>
+			<a href="#" class="list-group-item list-group-item-action {% if entity_type == 'people' %}active{% endif %}">
+				<i class="bi bi-person-badge"></i> Titulares
+			</a>
+		</div>
+	</aside>
+
+	<section class="col-md-9">
+		<h2 class="mb-4">{% block title %}Entidades{% endblock %}</h2>
+
+		<form method="get" class="row gy-2 gx-3 align-items-end mb-4">
+			{% block filters %}
+			<!-- Filtros específicos serão definidos em cada template filho -->
+			{% endblock %}
+			<div class="col-auto">
+				<button type="submit" class="btn btn-primary"><i class="bi bi-funnel-fill"></i> Filtrar</button>
+			</div>
+		</form>
+
+		{% block results %}
+		<div class="alert alert-info">Nenhum resultado encontrado.</div>
+		{% endblock %}
+	</section>
+</div>
+{% endblock %}
