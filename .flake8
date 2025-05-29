@@ -1,0 +1,19 @@
+[flake8]
+exclude =
+    .git,
+    .gitignore,
+    *.pot,
+    *.py[co],
+    __pycache__,
+    venv,
+    .env
+
+ignore = F401
+
+max-line-length = 400
+
+[autopep8]
+aggressive = 2
+max-line-length = 400
+
+# autopep8 --in-place --aggressive --aggressive path/to/seu_arquivo.py

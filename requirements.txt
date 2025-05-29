@@ -1,8 +1,13 @@
 asgiref==3.8.1
+autopep8==2.3.2
 crispy-bootstrap5==2025.4
-Django==5.2
+Django==5.2.1
 django-crispy-forms==2.4
 django-filter==25.1
-setuptools==75.8.0
+flake8==7.2.0
+mccabe==0.7.0
+pycodestyle==2.13.0
+pyflakes==3.3.2
+setuptools==80.9.0
 sqlparse==0.5.3
 wheel==0.45.1

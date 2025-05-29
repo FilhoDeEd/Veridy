@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 
 UserModel = get_user_model()
 
+
 class EmailOrUsernameBackend(BaseBackend):
     """
     Custom authentication backend to allow login using either email or username.

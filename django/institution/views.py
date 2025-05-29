@@ -114,7 +114,7 @@ class InstitutionEditView(LoginRequiredMixin, FormView):
     def form_invalid(self, form):
         messages.error(self.request, 'Por favor, corrija os erros abaixo.')
         return super().form_invalid(form)
-    
+
 
 class LegalRepresentativeEditView(LoginRequiredMixin, FormView):
     template_name = 'legal_representative_edit.html'
