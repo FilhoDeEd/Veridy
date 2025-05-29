@@ -1,20 +1,32 @@
 <!-- prettier-ignore -->
 {% extends "entity_list_base.html" %}
-{% block title_append %} Instituições {% endblock %}
-{% block breadcrumb_current %}Instituições{% endblock %}
-{% block title %}Instituições cadastradas{% endblock %}
-{% block entity_type %}institutions{% endblock %}
-{% block filters %}
-<div class="col-md-6">
-	<label for="id_name" class="form-label">Nome</label>
-	<input type="text" id="id_name" name="name" class="form-control" value="{{ request.GET.name }}" />
-</div>
-<div class="col-md-6">
-	<label for="id_domain" class="form-label">Domínio</label>
-	<input type="text" id="id_domain" name="domain" class="form-control" value="{{ request.GET.domain }}" />
-</div>
-<!-- prettier-ignore -->
+{% load crispy_forms_tags %}
+
+{% block title_append %}
+Instituições
 {% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'institution_list' %}" class="breadcrumb-link" aria-current="page">Instituições</a>
+</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Instituições cadastradas
+{% endblock %}
+
+{% block filters %}
+{{ filter.form|crispy }}
+{% endblock %}
+
+<!-- prettier-ignore -->
 {% block results %}
   {% if institutions %}
 <ul class="list-group">

@@ -32,13 +32,23 @@
 					{% endfor %}
 				</div>
 				{% endif %}
-				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb bg-transparent py-0 mb-4">
-						<!-- prettier-ignore -->
-						{% block breadcrumb %}
-						{% endblock %}
-					</ol>
-				</nav>
+				<div class="d-flex justify-content-between align-items-center mb-4">
+					<div>
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb bg-transparent py-0 mb-1">
+								<!-- prettier-ignore -->
+								{% block breadcrumb %}
+								{% endblock %}
+							</ol>
+						</nav>
+						<small class="text-muted">{% block subtitle %}{% endblock %}</small>
+					</div>
+					{% block back_button %}
+					<a href="javascript:history.back()" class="btn btn-outline-primary shadow-sm">
+						<i class="fas fa-arrow-left me-1"></i> Voltar
+					</a>
+					{% endblock %}
+				</div>
 				<!-- prettier-ignore -->
 				{% block content %}
 				{% endblock %}

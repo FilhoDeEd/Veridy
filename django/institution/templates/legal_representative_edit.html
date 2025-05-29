@@ -1,7 +1,11 @@
 <!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block title_append %}Editar Responsável Legal{% endblock %}
+
+{% block title_append %}
+Editar Responsável Legal
+{% endblock %}
+
 {% block breadcrumb %}
 <li class="breadcrumb-item">
 	<a href="{% url 'home' %}" class="breadcrumb-link">
@@ -12,19 +16,18 @@
 	<a href="{% url 'institution_profile' %}" class="breadcrumb-link">Perfil Institucional</a>
 </li>
 <li class="breadcrumb-item">
-	<a href="{% url 'legal_representative_edit' %}" class="breadcrumb-link" aria-current="page">Editar Responsável Legal</a>
+	<a href="{% url 'legal_representative_edit' %}" class="breadcrumb-link" aria-current="page"
+		>Editar Responsável Legal</a
+	>
 </li>
-<!-- prettier-ignore -->
 {% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Editar os dados do responsável legal
+{% endblock %}
+
 {% block content %}
-<div class="row align-items-center mb-4">
-	<div class="col">
-		<h2>Editar Responsável Legal</h2>
-	</div>
-	<div class="col-auto">
-		<a href="javascript:history.back()" class="btn btn-info"> <i class="fas fa-arrow-left"></i> Voltar </a>
-	</div>
-</div>
 <form method="post">
 	{% csrf_token %}
 	<fieldset class="border rounded p-3 mb-4">

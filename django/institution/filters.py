@@ -1,6 +1,5 @@
 import  django_filters
 from institution.models import Institution
-from django.db.models import Q
 
 
 class InstitutionFilter(django_filters.FilterSet):

@@ -1,15 +1,18 @@
 <!-- prettier-ignore -->
 {% extends "base.html" %}
-{% block title_append %} Listagem {% endblock %}
-{% block breadcrumb %}
-<li class="breadcrumb-item"><a href="{% url 'home' %}">Início</a></li>
-<li class="breadcrumb-item active" aria-current="page">{% block breadcrumb_current %}Listagem{% endblock %}</li>
-<!-- prettier-ignore -->
+
+{% block title_append %}
+Listagem
 {% endblock %}
+
+{% block subtitle %}
+Listagem
+{% endblock %}
+
 {% block content %}
 <div class="row">
 	<aside class="col-md-3 mb-4">
-		<div class="list-group">
+		<div class="list-group mb-4">
 			<a
 				href="{% url 'institution_list' %}"
 				class="list-group-item list-group-item-action {% if entity_type == 'institutions' %}active{% endif %}">
@@ -22,20 +25,19 @@
 				<i class="bi bi-person-badge"></i> Titulares
 			</a>
 		</div>
+
+		<form method="get" class="d-grid gap-3">
+			<fieldset class="border rounded p-3 mb-4">
+				<legend class="fs-6 text-muted">Filtros</legend>
+				<!-- prettier-ignore -->
+				{% block filters %}
+				{% endblock %}
+				<button type="submit" class="btn btn-primary"><i class="bi bi-funnel-fill"></i> Filtrar</button>
+			</fieldset>
+		</form>
 	</aside>
 
 	<section class="col-md-9">
-		<h2 class="mb-4">{% block title %}Entidades{% endblock %}</h2>
-
-		<form method="get" class="row gy-2 gx-3 align-items-end mb-4">
-			{% block filters %}
-			<!-- Filtros específicos serão definidos em cada template filho -->
-			{% endblock %}
-			<div class="col-auto">
-				<button type="submit" class="btn btn-primary"><i class="bi bi-funnel-fill"></i> Filtrar</button>
-			</div>
-		</form>
-
 		{% block results %}
 		<div class="alert alert-info">Nenhum resultado encontrado.</div>
 		{% endblock %}
