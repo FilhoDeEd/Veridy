@@ -32,6 +32,11 @@ class InstitutionListView(FilterView):
     ordering = ['name']
     paginate_by = 12
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['entity_type'] = 'institution'
+        return context
+
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(user__is_active=True)

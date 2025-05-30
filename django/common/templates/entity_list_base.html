@@ -15,7 +15,7 @@ Listagem
 		<div class="list-group mb-4">
 			<a
 				href="{% url 'institution_list' %}"
-				class="list-group-item list-group-item-action {% if entity_type == 'institutions' %}active{% endif %}">
+				class="list-group-item list-group-item-action {% if entity_type == 'institution' %}active{% endif %}">
 				<i class="bi bi-building"></i> Instituições
 			</a>
 			<a href="#" class="list-group-item list-group-item-action {% if entity_type == 'diplomas' %}active{% endif %}">
@@ -25,21 +25,23 @@ Listagem
 				<i class="bi bi-person-badge"></i> Titulares
 			</a>
 		</div>
-
 		<form method="get" class="d-grid gap-3">
 			<fieldset class="border rounded p-3 mb-4">
 				<legend class="fs-6 text-muted">Filtros</legend>
 				<!-- prettier-ignore -->
 				{% block filters %}
 				{% endblock %}
-				<div class="d-flex gap-2">
-					<button type="submit" class="btn btn-outline-primary shadow-sm"><i class="bi bi-funnel-fill"></i> Filtrar</button>
-					<a href="{% url 'institution_list' %}" class="btn btn-outline-warning shadow-sm"> Limpar </a>
+				<div class="row g-2">
+					<div class="col-auto">
+						<button type="submit" class="btn btn-outline-primary shadow-sm"><i class="bi bi-funnel-fill"></i> Filtrar</button>
+					</div>
+					<div class="col-auto">
+						<a href="{% url 'institution_list' %}" class="btn btn-outline-warning shadow-sm"> Limpar </a>
+					</div>
 				</div>
 			</fieldset>
 		</form>
 	</aside>
-
 	<section class="col-md-9">
 		{% block results %}
 		<div class="alert alert-info">Nenhum resultado encontrado.</div>
