@@ -1,6 +1,7 @@
+import os
+
 from enum import StrEnum
 from pathlib import Path
-import os
 
 
 class Envs(StrEnum):
@@ -19,19 +20,24 @@ def get_secret(key: str, default: str = '') -> str:
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 SECRET_KEY = 'django-insecure-n+kcttfsm2zl2$83_^+-@2ui9)=03&f38a^(m4qcq*0-bf3+__'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
+
 AUTH_USER_MODEL = 'common.VeridyUser'
+
 
 AUTHENTICATION_BACKENDS = [
     'common.backends.EmailOrUsernameBackend',
     'django.contrib.auth.backends.ModelBackend'
 ]
+
 
 DEFAULT_APPS = [
     'django.contrib.admin',
@@ -66,7 +72,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'core.urls'
+
 
 TEMPLATES = [
     {
@@ -86,9 +94,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -96,9 +101,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
