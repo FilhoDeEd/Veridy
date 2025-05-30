@@ -86,3 +86,15 @@
 	color: #73c7ee;
 	text-decoration: underline;
 }
+
+.breadcrumb-container {
+	max-width: 60%;
+}
+
+.breadcrumb-scroll {
+	overflow-x: auto;
+}
+
+.breadcrumb-item {
+	flex-shrink: 0;
+}
