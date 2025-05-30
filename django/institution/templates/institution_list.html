@@ -28,41 +28,18 @@ Instituições cadastradas
 
 <!-- prettier-ignore -->
 {% block results %}
-  {% if institutions %}
+{% if institutions %}
 <ul class="list-group">
-	{% for inst in institutions %}
+	{% for institution in institutions %}
 	<li class="list-group-item">
-		<h5 class="mb-1">{{ inst.name }}</h5>
-		<p class="mb-1"><strong>Domínio:</strong> {{ inst.domain }}</p>
-		<small>{{ inst.city }}, {{ inst.state }} — {{ inst.country }}</small>
+		<h5 class="mb-1">{{ institution.name }}</h5>
+		<p class="mb-1"><strong>Domínio:</strong> {{ institution.domain }}</p>
+		<small>{{ institution.city }}, {{ institution.state }} — {{ institution.country }}</small>
 	</li>
 	{% endfor %}
 </ul>
-
-{% if is_paginated %}
-<nav class="mt-4">
-	<ul class="pagination">
-		{% if page_obj.has_previous %}
-		<li class="page-item">
-			<a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-		</li>
-		{% endif %}
-
-		<li class="page-item disabled">
-			<span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
-		</li>
-
-		{% if page_obj.has_next %}
-		<li class="page-item">
-			<a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima</a>
-		</li>
-		{% endif %}
-	</ul>
-</nav>
-<!-- prettier-ignore -->
-{% endif %}
 {% else %}
-<div class="alert alert-warning">Nenhuma instituição encontrada.</div>
+<div class="alert alert-info">Nenhuma instituição encontrada.</div>
 <!-- prettier-ignore -->
 {% endif %}
 {% endblock %}

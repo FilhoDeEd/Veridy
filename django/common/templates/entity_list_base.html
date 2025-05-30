@@ -32,7 +32,10 @@ Listagem
 				<!-- prettier-ignore -->
 				{% block filters %}
 				{% endblock %}
-				<button type="submit" class="btn btn-primary"><i class="bi bi-funnel-fill"></i> Filtrar</button>
+				<div class="d-flex gap-2">
+					<button type="submit" class="btn btn-outline-primary shadow-sm"><i class="bi bi-funnel-fill"></i> Filtrar</button>
+					<a href="{% url 'institution_list' %}" class="btn btn-outline-warning shadow-sm"> Limpar </a>
+				</div>
 			</fieldset>
 		</form>
 	</aside>
@@ -40,7 +43,11 @@ Listagem
 	<section class="col-md-9">
 		{% block results %}
 		<div class="alert alert-info">Nenhum resultado encontrado.</div>
+		<!-- prettier-ignore -->
 		{% endblock %}
+		{% if is_paginated %}
+		{% include 'components/pagination.html' %}
+		{% endif %}
 	</section>
 </div>
 {% endblock %}

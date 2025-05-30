@@ -5,7 +5,7 @@ $gray-text: #5a5d72 !default;
 // Cerulean 5.3.5
 // Bootswatch
 
-$theme: "cerulean" !default;
+$theme: 'cerulean' !default;
 
 // Color system
 
@@ -33,7 +33,7 @@ $teal: #20c997 !default;
 $cyan: #2fa4e7 !default;
 
 $primary: $blue-primary !default;
-$secondary: $gray-200 !default;
+$secondary: $gray-500 !default;
 $success: $green !default;
 $info: $blue !default;
 $warning: $yellow !default;
@@ -62,7 +62,7 @@ $dropdown-link-hover-bg: $primary !default;
 
 // Navbar
 
-$navbar-dark-color: rgba($white, .8) !default;
+$navbar-dark-color: rgba($white, 0.8) !default;
 $navbar-dark-hover-color: $white !default;
 
-@import "./node_modules/bootstrap/scss/bootstrap";
+@import './node_modules/bootstrap/scss/bootstrap';
