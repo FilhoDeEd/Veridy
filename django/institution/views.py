@@ -1,3 +1,5 @@
+from common.models import UserTypeChoices
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -5,9 +7,11 @@ from django.db import transaction
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
+
 from django_filters.views import FilterView
 
 from institution.forms import InstitutionRegistrationForm, InstitutionEditForm, LegalRepresentativeForm
+from institution.mixins import InstitutionRequiredMixin
 from institution.models import Institution, LegalRepresentative
 from institution.filters import InstitutionFilter
 
@@ -15,7 +19,7 @@ from institution.filters import InstitutionFilter
 UserModel = get_user_model()
 
 
-class InstitutionProfileView(LoginRequiredMixin, TemplateView):
+class InstitutionProfileView(InstitutionRequiredMixin, TemplateView):
     template_name = 'institution_profile.html'
 
     def get(self, request, *args, **kwargs):
@@ -55,7 +59,8 @@ class InstitutionRegistrationView(FormView):
                 user = UserModel.objects.create_user(
                     username=data.get('username'),
                     email=data.get('email'),
-                    password=data.get('password1')
+                    password=data.get('password1'),
+                    user_type=UserTypeChoices.INSTITUTION
                 )
 
                 representative = LegalRepresentative.objects.create(
