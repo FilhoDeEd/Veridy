@@ -19,15 +19,6 @@ from institution.filters import InstitutionFilter
 UserModel = get_user_model()
 
 
-class InstitutionProfileView(InstitutionRequiredMixin, TemplateView):
-    template_name = 'institution_profile.html'
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context['institution'] = self.request.user.institution
-        return self.render_to_response(context)
-
-
 class InstitutionListView(FilterView):
     model = Institution
     template_name = 'institution_list.html'
@@ -94,7 +85,16 @@ class InstitutionRegistrationView(FormView):
         return super().form_invalid(form)
 
 
-class InstitutionEditView(LoginRequiredMixin, FormView):
+class InstitutionProfileView(InstitutionRequiredMixin, TemplateView):
+    template_name = 'institution_profile.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['institution'] = self.request.user.institution
+        return self.render_to_response(context)
+
+
+class InstitutionEditView(InstitutionRequiredMixin, FormView):
     template_name = 'institution_edit.html'
     form_class = InstitutionEditForm
     success_url = reverse_lazy('institution_profile')
@@ -126,7 +126,7 @@ class InstitutionEditView(LoginRequiredMixin, FormView):
         return super().form_invalid(form)
 
 
-class LegalRepresentativeEditView(LoginRequiredMixin, FormView):
+class LegalRepresentativeEditView(InstitutionRequiredMixin, FormView):
     template_name = 'legal_representative_edit.html'
     form_class = LegalRepresentativeForm
     success_url = reverse_lazy('institution_profile')
