@@ -1,5 +1,5 @@
 <!-- prettier-ignore -->
-{% extends 'base.html' %}
+{% extends 'entity_registration_base.html' %}
 {% load crispy_forms_tags %}
 
 {% block title_append %}
@@ -13,10 +13,7 @@ Cadastrar Instituição
 	</a>
 </li>
 <li class="breadcrumb-item">
-	<a href="#" class="breadcrumb-link">Instituições</a>
-</li>
-<li class="breadcrumb-item">
-	<a href="{% url 'institution_registration' %}" class="breadcrumb-link" aria-current="page">Cadastrar</a>
+	<a href="{% url 'institution_registration' %}" class="breadcrumb-link" aria-current="page">Cadastrar Instituição</a>
 </li>
 {% endblock %}
 
@@ -25,7 +22,7 @@ Cadastrar Instituição
 Cadastrar instituição
 {% endblock %}
 
-{% block content %}
+{% block registration_form %}
 <form method="post">
 	{% csrf_token %}
 	<div class="shadow-sm">
@@ -37,8 +34,9 @@ Cadastrar instituição
 				<div class="col-md-6">{{ form.tax_id|as_crispy_field }}</div>
 			</div>
 			<div class="row">
-				<div class="col-md-6">{{ form.domain|as_crispy_field }}</div>
-				<div class="col-md-6">{{ form.phone|as_crispy_field }}</div>
+				<div class="col-md-4">{{ form.domain|as_crispy_field }}</div>
+				<div class="col-md-4">{{ form.email|as_crispy_field }}</div>
+				<div class="col-md-4">{{ form.phone|as_crispy_field }}</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">{{ form.full_address|as_crispy_field }}</div>
@@ -69,8 +67,7 @@ Cadastrar instituição
 		<fieldset class="border rounded-bottom p-3 mb-3">
 			<legend>Dados do Usuário</legend>
 			<div class="row">
-				<div class="col-md-6">{{ form.username|as_crispy_field }}</div>
-				<div class="col-md-6">{{ form.email|as_crispy_field }}</div>
+				<div class="col-md-12">{{ form.username|as_crispy_field }}</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">{{ form.password1|as_crispy_field }}</div>
@@ -78,7 +75,6 @@ Cadastrar instituição
 			</div>
 		</fieldset>
 	</div>
-	<button type="submit" class="btn btn-primary me-2">Cadastrar</button>
-	<a href="#" class="btn btn-danger">Cancelar</a>
+	<button type="submit" class="btn btn-primary">Cadastrar</button>
 </form>
 {% endblock %}

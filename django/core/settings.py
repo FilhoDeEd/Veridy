@@ -50,7 +50,8 @@ DEFAULT_APPS = [
 
 PROJECT_APPS = [
     'common',
-    'institution'
+    'institution',
+    'subject'
 ]
 
 THIRDPARTY_APPS = [

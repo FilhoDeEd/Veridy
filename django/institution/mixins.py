@@ -14,7 +14,10 @@ class InstitutionRequiredMixin(AccessMixin):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
 
+        print(request.user.is_institution)
+
         if not request.user.is_institution:
+            print('djhqdijqwhdfjkpwqhdpjikwqghdpiujwqghdwjkd')
             messages.error(
                 request,
                 'Você não tem permissão para acessar esta página. '

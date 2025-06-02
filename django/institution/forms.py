@@ -8,27 +8,114 @@ UserModel = get_user_model()
 
 
 class InstitutionRegistrationForm(UserCreationForm):
-    name = forms.CharField(label='Nome', max_length=255)
-    tax_id = forms.CharField(label='CNPJ ou equivalente', max_length=255)
-    domain = forms.CharField(label='Domínio institucional', max_length=255, help_text='ex: exemplo.edu.br')
-    phone = forms.CharField(label='Telefone de contato', max_length=20)
-
-    city = forms.CharField(label='Cidade', max_length=255)
-    state = forms.CharField(label='Estado', max_length=255)
-    country = forms.CharField(label='País', max_length=255)
-    full_address = forms.CharField(
-        label='Endereço completo',
-        widget=forms.Textarea(attrs={'rows': 2})
+    name = forms.CharField(
+        label='Nome da Instituição',
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={'autofocus': True}
+        )
     )
 
-    representative_name = forms.CharField(label='Nome', max_length=255)
-    representative_role = forms.CharField(label='Cargo', max_length=255)
-    representative_email = forms.EmailField(label='E-mail')
-    representative_phone = forms.CharField(label='Telefone', max_length=20)
+    tax_id = forms.CharField(
+        label='CNPJ',
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={'placeholder': '00.000.000/0001-00'}
+        )
+    )
+
+    domain = forms.CharField(
+        label='Domínio Institucional',
+        max_length=255,
+        help_text='Domínio principal do site institucional',
+        widget=forms.TextInput(
+            attrs={'placeholder': 'exemplo.edu.br'}
+        )
+    )
+
+    phone = forms.CharField(
+        label='Telefone',
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={'placeholder': '(00) 00000-0000'}
+        )
+    )
+
+    city = forms.CharField(
+        label='Cidade',
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={'placeholder': 'São Paulo'}
+        )
+    )
+
+    state = forms.CharField(
+        label='Estado',
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={'placeholder': 'SP'}
+        )
+    )
+
+    country = forms.CharField(
+        label='País',
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Brasil'}
+        )
+    )
+
+    full_address = forms.CharField(
+        label='Endereço Completo',
+        widget=forms.Textarea(
+            attrs={
+                'rows': 1,
+                'placeholder': 'Rua Exemplo, 123 - Bairro, CEP 00000-000'
+            }
+        )
+    )
+
+    representative_name = forms.CharField(
+        label='Nome do Representante',
+        max_length=255
+    )
+
+    representative_role = forms.CharField(
+        label='Cargo',
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Diretor'}
+        )
+    )
+
+    representative_email = forms.EmailField(
+        label='E-mail',
+        widget=forms.EmailInput(
+            attrs={'placeholder': 'representante@exemplo.com'}
+        )
+    )
+
+    representative_phone = forms.CharField(
+        label='Telefone',
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={'placeholder': '(00) 00000-0000'}
+        )
+    )
 
     class Meta:
         model = UserModel
         fields = ['username', 'email', 'password1', 'password2']
+        labels = {'email': 'E-mail da Instituição'}
+        widgets = {
+            'email': forms.EmailInput(
+                attrs={'placeholder': 'exemplo@exemplo.edu.br'}
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.pop('autofocus', None)
 
 
 class InstitutionEditForm(forms.ModelForm):

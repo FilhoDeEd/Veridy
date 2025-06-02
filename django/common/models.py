@@ -12,9 +12,11 @@ class VeridyUser(AbstractUser):
     email = models.EmailField(unique=True)
     user_type = models.CharField(max_length=1, choices=UserTypeChoices.choices)
 
+    @property
     def is_institution(self):
         return self.user_type == UserTypeChoices.INSTITUTION
 
+    @property
     def is_subject(self):
         return self.user_type == UserTypeChoices.SUBJECT
 

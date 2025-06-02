@@ -1,0 +1,47 @@
+<!-- prettier-ignore -->
+{% extends 'entity_registration_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title_append %}
+Cadastrar Titular
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'subject_registration' %}" class="breadcrumb-link" aria-current="page">Cadastrar</a>
+</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Cadastrar titular
+{% endblock %}
+
+{% block registration_form %}
+<form method="post">
+	{% csrf_token %}
+	<div class="shadow-sm">
+		<div class="bg-primary py-2 rounded-top"></div>
+		<fieldset class="border rounded-bottom p-3 mb-3">
+			<legend>Dados do Titular</legend>
+			<div class="row">
+				<div class="col-md-12">{{ form.full_name|as_crispy_field }}</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">{{ form.username|as_crispy_field }}</div>
+				<div class="col-md-6">{{ form.email|as_crispy_field }}</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">{{ form.password1|as_crispy_field }}</div>
+				<div class="col-md-6">{{ form.password2|as_crispy_field }}</div>
+			</div>
+		</fieldset>
+	</div>
+	<button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+{% endblock %}

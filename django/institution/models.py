@@ -1,6 +1,6 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 
 UserModel = get_user_model()
@@ -22,14 +22,15 @@ class LegalRepresentative(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.name} ({self.role})"
+        return f'{self.name} ({self.role})'
 
 
 class Institution(models.Model):
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE)
+
     name = models.CharField(max_length=255)
     tax_id = models.CharField(max_length=50, unique=True)
-    domain = models.CharField(max_length=255, help_text="e.g., example.edu.br")
+    domain = models.CharField(max_length=255, help_text='e.g., example.edu.br')
     phone = models.CharField(max_length=20)
 
     city = models.CharField(max_length=255)

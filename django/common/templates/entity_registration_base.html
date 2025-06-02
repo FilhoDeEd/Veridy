@@ -1,0 +1,32 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+
+{% block title_append %}
+Cadastro
+{% endblock %}
+
+{% block subtitle %}
+Cadastro de Entidades
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+	<div class="col-md-2 col-sm-4">
+		<a
+			href="{% url 'subject_registration' %}"
+			class="btn btn-outline-primary w-100 {% if entity_type == 'subject' %}active{% endif %}">
+			<i class="bi bi-person-plus"></i> Titular
+		</a>
+	</div>
+	<div class="col-md-2 col-sm-4">
+		<a
+			href="{% url 'institution_registration' %}"
+			class="btn btn-outline-primary w-100 {% if entity_type == 'institution' %}active{% endif %}">
+			<i class="bi bi-building-add"></i> Instituição
+		</a>
+	</div>
+</div>
+<!-- prettier-ignore -->
+{% block registration_form %}
+{% endblock %}
+{% endblock %}
