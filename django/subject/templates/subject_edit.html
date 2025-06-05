@@ -1,0 +1,43 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title_append %}
+Editar Dados
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'subject_profile' %}" class="breadcrumb-link">Perfil</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'subject_edit' %}" class="breadcrumb-link" aria-current="page">Editar</a>
+</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Editar Informações do Usuário
+{% endblock %}
+
+{% block content %}
+<form method="post">
+	{% csrf_token %}
+	<fieldset class="border rounded p-3 mb-4">
+		<legend>Dados Pessoais</legend>
+		<div class="row">
+			<div class="col-md-8">{{ form.full_name|as_crispy_field }}</div>
+			<div class="col-md-4">{{ form.birth_date|as_crispy_field }}</div>
+		</div>
+	</fieldset>
+	<div class="d-flex justify-content-end gap-2">
+		<button type="submit" class="btn btn-success px-4">Salvar Alterações</button>
+		<a href="{% url 'subject_profile' %}" class="btn btn-danger">Cancelar</a>
+	</div>
+</form>
+{% endblock %}

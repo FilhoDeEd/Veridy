@@ -10,7 +10,7 @@ from django.views.generic.edit import FormView
 
 from django_filters.views import FilterView
 
-from institution.forms import InstitutionRegistrationForm, InstitutionEditForm, LegalRepresentativeForm
+from institution.forms import InstitutionEditForm, InstitutionRegistrationForm, LegalRepresentativeForm
 from institution.mixins import InstitutionRequiredMixin
 from institution.models import Institution, LegalRepresentative
 from institution.filters import InstitutionFilter
@@ -111,12 +111,6 @@ class InstitutionEditView(InstitutionRequiredMixin, FormView):
         return form_kwargs
 
     def form_valid(self, form: InstitutionEditForm):
-        institutional_email = form.cleaned_data.get('institutional_email')
-
-        if Institution.objects.filter(institutional_email=institutional_email).exclude(id=self.institution.id).exists():
-            form.add_error('institutional_email', 'Uma instituição com este e-mail já está cadastrada.')
-            return self.form_invalid(form)
-
         tax_id = form.cleaned_data.get('tax_id')
         if Institution.objects.filter(tax_id=tax_id).exclude(id=self.institution.id).exists():
             form.add_error('tax_id', 'Uma instituição com este CNPJ já está cadastrada.')

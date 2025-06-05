@@ -10,7 +10,7 @@ from django.views.generic.edit import FormView
 
 from django_filters.views import FilterView
 
-from subject.forms import SubjectRegistrationForm
+from subject.forms import SubjectEditForm, SubjectRegistrationForm
 from subject.mixins import SubjectRequiredMixin
 from subject.models import Subject
 # from subject.filters import InstitutionFilter
@@ -61,3 +61,24 @@ class SubjectProfileView(SubjectRequiredMixin, TemplateView):
         context = self.get_context_data(**kwargs)
         context['subject'] = self.request.user.subject
         return self.render_to_response(context)
+
+
+class SubjectEditView(SubjectRequiredMixin, FormView):
+    template_name = 'subject_edit.html'
+    form_class = SubjectEditForm
+    success_url = reverse_lazy('subject_profile')
+
+    def get_form_kwargs(self):
+        form_kwargs = super().get_form_kwargs()
+        self.subject = self.request.user.subject
+        form_kwargs.update({'instance': self.subject})
+        return form_kwargs
+
+    def form_valid(self, form: SubjectEditForm):
+        form.save()
+        messages.success(self.request, 'Dados atualizados com sucesso!')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Por favor, corrija os erros abaixo.')
+        return super().form_invalid(form)
