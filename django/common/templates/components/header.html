@@ -1,5 +1,7 @@
 <!-- prettier-ignore -->
 {% load static %}
+{% load url_by_user_type %}
+
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
 	<symbol id="no-user-icon" viewBox="0 0 512 512">
 		<path
@@ -62,7 +64,7 @@
 				<ul class="dropdown-menu dropdown-menu-end text-small shadow">
 					{% if user.is_authenticated %}
 					<li>
-						<a class="dropdown-item" href="{% url 'institution_profile' %}">Perfil</a>
+						<a class="dropdown-item" href="{% url_by_user_type 'profile' %}">Perfil</a>
 					</li>
 					<li><a class="dropdown-item" href="#">Configurações</a></li>
 					<li>

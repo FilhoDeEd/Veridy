@@ -4,8 +4,8 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 
-class InstitutionRequiredMixin(AccessMixin):
-    """Verify that the current user is a institution and is authenticated."""
+class SubjectRequiredMixin(AccessMixin):
+    """Verify that the current user is a subject and is authenticated."""
 
     def get_redirect_url(self):
         return reverse('home')
@@ -14,7 +14,7 @@ class InstitutionRequiredMixin(AccessMixin):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
 
-        if not request.user.is_institution:
+        if not request.user.is_subject:
             messages.error(
                 request,
                 'Você não tem permissão para acessar esta página. '

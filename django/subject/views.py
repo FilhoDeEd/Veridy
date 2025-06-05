@@ -11,7 +11,7 @@ from django.views.generic.edit import FormView
 from django_filters.views import FilterView
 
 from subject.forms import SubjectRegistrationForm
-# from subject.mixins import InstitutionRequiredMixin
+from subject.mixins import SubjectRequiredMixin
 from subject.models import Subject
 # from subject.filters import InstitutionFilter
 
@@ -52,3 +52,12 @@ class SubjectRegistrationView(FormView):
             return self.form_invalid(form)
 
         return super().form_valid(form)
+
+
+class SubjectProfileView(SubjectRequiredMixin, TemplateView):
+    template_name = 'subject_profile.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['subject'] = self.request.user.subject
+        return self.render_to_response(context)

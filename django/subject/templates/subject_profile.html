@@ -1,0 +1,42 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+
+{% block title_append %}
+Perfil do Participante
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'subject_profile' %}" class="breadcrumb-link" aria-current="page">Perfil do Participante</a>
+</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Perfil do participante
+{% endblock %}
+
+{% block content %}
+<div class="card mb-3">
+	<div class="card-header">
+		<strong>Informações Pessoais</strong>
+		<a
+			href="{% url 'subject_edit' %}"
+			class="btn btn-link btn-md position-absolute end-0 top-0 me-1"
+			title="Editar Informações">
+			<i class="fas fa-edit"></i>
+		</a>
+	</div>
+	<div class="card-body">
+		<p><strong>Nome completo:</strong> {{ subject.full_name }}</p>
+		<p><strong>Data de nascimento:</strong> {{ subject.birth_date|date:"d/m/Y" }}</p>
+		<p><strong>Nome de usuário:</strong> {{ subject.user.username }}</p>
+		<p><strong>E-mail:</strong> {{ subject.user.email }}</p>
+	</div>
+</div>
+{% endblock %}
