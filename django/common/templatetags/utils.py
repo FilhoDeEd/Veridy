@@ -7,12 +7,12 @@ register = template.Library()
 
 
 @register.simple_tag(takes_context=True)
-def url_for_user_type(context, url_type):
+def url_by_user_type(context, url_type):
     """
     Returns the correct URL for the current user based on their user type.
 
     Usage in templates:
-        {% url_for_user_type 'profile' %}
+        {% url_by_user_type 'profile' %}
 
     This will resolve to 'subject_profile' or 'institution_profile'
     depending on whether the user is a Subject or Institution.
