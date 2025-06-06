@@ -1,0 +1,49 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title_append %}
+Registrar Documento
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'document_upload' %}" class="breadcrumb-link" aria-current="page">Registrar Documento</a>
+</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Emitir um novo documento PDF vinculado a um Titular
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	<div class="shadow-sm">
+		<div class="bg-primary py-2 rounded-top"></div>
+		<fieldset class="border rounded-bottom p-3 mb-4">
+			<legend>Dados do Documento</legend>
+			<div class="row">
+				<div class="col-12">{{ form.file|as_crispy_field }}</div>
+			</div>
+			<div class="row">
+				<div class="col-12">{{ form.subject|as_crispy_field }}</div>
+			</div>
+		</fieldset>
+	</div>
+	<div class="row g-2">
+		<div class="col-auto">
+			<button type="submit" class="btn btn-success">Enviar Documento</button>
+		</div>
+		<div class="col-auto">
+			<a href="{% url 'home' %}" class="btn btn-secondary">Cancelar</a>
+		</div>
+	</div>
+</form>
+{% endblock %}
