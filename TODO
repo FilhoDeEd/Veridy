@@ -26,12 +26,12 @@
 
 ## 👤 Indivíduo
 
-- [ ] Página de cadastro
-- [ ] Página de login
-- [ ] Página de perfil
+- [x] Página de cadastro
+- [x] Página de login
+- [x] Página de perfil
   - [ ] Edição de dados pessoais
-    - [ ] Nome
-    - [ ] E-mail
+    - [x] Nome
+    - [x] E-mail
     - [ ] Foto de perfil
     - [ ] Documento de identificação (se fornecido)
   - [ ] Alerta sobre alteração de nome (caso tenha diplomas)
