@@ -45,17 +45,20 @@
 ## 📜 Diploma
 
 - [ ] Página pública do diploma
+
   - [ ] Exibição das informações do diploma
   - [ ] Validação do hash
   - [ ] Status: autêntico, revogado, não encontrado
   - [ ] Acesso ao PDF (se público)
+
 - [ ] Página de verificação pública
   - [ ] Busca por:
     - [ ] Identificador
     - [ ] Hash
     - [ ] Link direto
-- [ ] Página de listagem pública de diplomas emitidos (transparência)
-- [ ] Página administrativa para logs de emissão/verificação
+
+* [ ] Página de listagem pública de diplomas emitidos (transparência)
+* [ ] Página administrativa para logs de emissão/verificação
 
 ---
 

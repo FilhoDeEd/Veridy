@@ -24,13 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n+kcttfsm2zl2$83_^+-@2ui9)=03&f38a^(m4qcq*0-bf3+__'
 
 
+AUTH_USER_MODEL = 'common.VeridyUser'
+
+
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
 
 
-AUTH_USER_MODEL = 'common.VeridyUser'
+STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = '/home/edson/media/'  # Temporário enquanto não tem Docker
 
 
 AUTHENTICATION_BACKENDS = [
@@ -130,9 +135,6 @@ LOGIN_URL = "/auth/login/"
 LOGOUT_URL = "/auth/logout/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/auth/login/"
-
-
-STATIC_URL = 'static/'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
