@@ -13,10 +13,28 @@ from django_filters.views import FilterView
 from subject.forms import SubjectEditForm, SubjectRegistrationForm
 from subject.mixins import SubjectRequiredMixin
 from subject.models import Subject
-# from subject.filters import InstitutionFilter
+from subject.filters import SubjectFilter
 
 
 UserModel = get_user_model()
+
+
+class SubjectListView(FilterView):
+    model = Subject
+    template_name = 'subject_list.html'
+    filterset_class = SubjectFilter
+    context_object_name = 'subjects'
+    ordering = ['full_name']
+    paginate_by = 12
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['entity_type'] = 'subject'
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user__is_active=True)
 
 
 class SubjectRegistrationView(FormView):

@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title_append %}
-Instituições
+Titulares
 {% endblock %}
 
 {% block breadcrumb %}
@@ -13,13 +13,13 @@ Instituições
 	</a>
 </li>
 <li class="breadcrumb-item">
-	<a href="{% url 'institution_list' %}" class="breadcrumb-link" aria-current="page">Instituições</a>
+	<a href="{% url 'subject_list' %}" class="breadcrumb-link" aria-current="page">Titulares</a>
 </li>
 {% endblock %}
 
 <!-- prettier-ignore -->
 {% block subtitle %}
-Instituições Cadastradas
+Titulares Cadastrados
 {% endblock %}
 
 {% block filters %}
@@ -28,18 +28,20 @@ Instituições Cadastradas
 
 <!-- prettier-ignore -->
 {% block results %}
-{% if institutions %}
+{% if subjects %}
 <ul class="list-group">
-	{% for institution in institutions %}
+	{% for subject in subjects %}
 	<li class="list-group-item">
-		<h5 class="mb-1">{{ institution.name }}</h5>
-		<p class="mb-1"><strong>Domínio:</strong> {{ institution.domain }}</p>
-		<small>{{ institution.city }}, {{ institution.state }} — {{ institution.country }}</small>
+		<h5 class="mb-1">{{ subject.full_name }}</h5>
+		<p class="mb-1"><strong>E-mail:</strong> {{ subject.user.email }}</p>
+		{% if subject.birth_date %}
+		<small><strong>Data de nascimento:</strong> {{ subject.birth_date|date:"d/m/Y" }}</small>
+		{% endif %}
 	</li>
 	{% endfor %}
 </ul>
 {% else %}
-<div class="alert alert-info">Nenhuma instituição encontrada.</div>
+<div class="alert alert-info">Nenhum titular encontrado.</div>
 <!-- prettier-ignore -->
 {% endif %}
 {% endblock %}
