@@ -55,7 +55,7 @@ DEFAULT_APPS = [
 
 PROJECT_APPS = [
     'common',
-    'documents',
+    'document',
     'institution',
     'subject'
 ]
