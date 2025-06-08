@@ -1,0 +1,59 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+
+{% block title_append %}
+Detalhes do Documento
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link"><i class="fas fa-home"></i></a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'document_list' %}" class="breadcrumb-link">Documentos</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'document_detail' document_id=document.id %}" class="breadcrumb-link" aria-current="page">
+		{{ document }}
+	</a>
+</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Visualização do Documento
+{% endblock %}
+
+{% block content %}
+<div class="card mb-3">
+	<div class="card-header">
+		<strong>Informações do Documento</strong>
+	</div>
+	<div class="card-body">
+		<p><strong>Arquivo:</strong> {{ document }}</p>
+		<p>
+			<strong>Titular:</strong>
+			<a href="{% url 'subject_detail' subject_id=document.subject.id %}"> {{ document.subject.full_name }} </a>
+		</p>
+		<p>
+			<strong>Instituição:</strong>
+			<a href="{% url 'institution_detail' institution_id=document.institution.id %}"> {{ document.institution.name }} </a>
+		</p>
+		<p><strong>Data de envio:</strong> {{ document.upload_date|date:"d/m/Y H:i" }}</p>
+		<p><strong>Última atualização:</strong> {{ document.update_date|date:"d/m/Y H:i" }}</p>
+	</div>
+</div>
+<div class="card">
+	<div class="card-header">
+		<strong>Visualização do PDF</strong>
+	</div>
+	<div class="card-body text-center" style="min-height: 600px">
+		<embed
+			src="{{ document.file.url }}#toolbar=0"
+			type="application/pdf"
+			width="100%"
+			height="600px"
+			style="border: 1px solid #ccc; border-radius: 8px" />
+	</div>
+</div>
+{% endblock %}

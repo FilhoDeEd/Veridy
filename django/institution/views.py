@@ -5,9 +5,7 @@ from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.http import Http404
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import FormView
+from django.views.generic import DetailView, FormView, TemplateView
 
 from django_filters.views import FilterView
 

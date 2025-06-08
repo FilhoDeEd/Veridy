@@ -2,11 +2,9 @@ from common.models import UserTypeChoices
 
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView
-from django.views.generic.edit import FormView
+from django.views.generic import DetailView, FormView
 
 from django_filters.views import FilterView
 
@@ -56,3 +54,10 @@ class DocumentUploadView(InstitutionRequiredMixin, FormView):
     def form_invalid(self, form):
         messages.error(self.request, 'Erro ao enviar o formulário. Verifique os campos e tente novamente.')
         return super().form_invalid(form)
+
+
+class DocumentDetailView(DetailView):
+    model = Document
+    template_name = 'document_detail.html'
+    context_object_name = 'document'
+    pk_url_kwarg = 'document_id'
