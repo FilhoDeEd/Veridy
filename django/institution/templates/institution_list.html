@@ -31,10 +31,15 @@ Instituições Cadastradas
 {% if institutions %}
 <ul class="list-group">
 	{% for institution in institutions %}
+	<div class="bg-primary py-2 rounded-top"></div>
 	<li class="list-group-item">
-		<h5 class="mb-1">{{ institution.name }}</h5>
-		<p class="mb-1"><strong>Domínio:</strong> {{ institution.domain }}</p>
-		<small>{{ institution.city }}, {{ institution.state }} — {{ institution.country }}</small>
+		<a
+			href="{% url 'institution_detail' institution_id=institution.id %}"
+			class="d-block text-reset text-decoration-none">
+			<h5 class="mb-1">{{ institution.name }}</h5>
+			<p class="mb-1"><strong>Domínio:</strong> {{ institution.domain }}</p>
+			<small>{{ institution.city }}, {{ institution.state }} — {{ institution.country }}</small>
+		</a>
 	</li>
 	{% endfor %}
 </ul>

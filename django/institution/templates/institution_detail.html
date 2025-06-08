@@ -1,0 +1,61 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+
+{% block title_append %}
+Perfil da Instituição
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'institution_list' %}" class="breadcrumb-link" aria-current="page">Instituições</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'institution_detail' institution_id=institution.id %}" class="breadcrumb-link" aria-current="page">
+		{{ institution.name }}
+	</a>
+</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Perfil da instituição
+{% endblock %}
+
+{% block content %}
+<div class="alert alert-success" role="alert">
+	<i class="fas fa-certificate me-2"></i>
+	Instituição verificada associada ao domínio <strong>{{ institution.domain }}</strong>
+</div>
+<div class="card mb-3">
+	<div class="card-header">
+		<strong>Informações da Instituição</strong>
+	</div>
+	<div class="card-body">
+		<p><strong>Nome:</strong> {{ institution.name }}</p>
+		<p><strong>CNPJ:</strong> {{ institution.tax_id }}</p>
+		<p><strong>Domínio:</strong> {{ institution.domain }}</p>
+		<p><strong>E-mail institucional:</strong> {{ institution.user.email }}</p>
+		<p><strong>Telefone:</strong> {{ institution.phone }}</p>
+		<p><strong>Endereço completo:</strong> {{ institution.full_address }}</p>
+		<p><strong>Cidade:</strong> {{ institution.city }}</p>
+		<p><strong>Estado:</strong> {{ institution.state }}</p>
+		<p><strong>País:</strong> {{ institution.country }}</p>
+	</div>
+</div>
+<div class="card mb-3">
+	<div class="card-header">
+		<strong>Representante Legal</strong>
+	</div>
+	<div class="card-body">
+		<p><strong>Nome:</strong> {{ institution.representative.name }}</p>
+		<p><strong>Cargo:</strong> {{ institution.representative.role }}</p>
+		<p><strong>E-mail:</strong> {{ institution.representative.email }}</p>
+		<p><strong>Telefone:</strong> {{ institution.representative.phone }}</p>
+	</div>
+</div>
+{% endblock %}
