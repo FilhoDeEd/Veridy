@@ -44,16 +44,38 @@ Visualização do Documento
 	</div>
 </div>
 <div class="card">
-	<div class="card-header">
-		<strong>Visualização do PDF</strong>
-	</div>
-	<div class="card-body text-center" style="min-height: 600px">
-		<embed
-			src="{{ document.file.url }}#toolbar=0"
-			type="application/pdf"
-			width="100%"
-			height="600px"
-			style="border: 1px solid #ccc; border-radius: 8px" />
+	<div class="card-header"><strong>Visualização</strong></div>
+	<div class="card-body">
+		<canvas id="pdf-canvas" style="width: 100%; height: auto"></canvas>
 	</div>
 </div>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block extra_scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+	const url = '{{ document.file.url }}';
+	const pdfjsLib = window['pdfjs-dist/build/pdf'];
+	pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+	const loadingTask = pdfjsLib.getDocument(url);
+	loadingTask.promise.then(function (pdf) {
+		pdf.getPage(1).then(function (page) {
+			const scale = 1.5;
+			const viewport = page.getViewport({ scale: scale });
+
+			const canvas = document.getElementById('pdf-canvas');
+			const context = canvas.getContext('2d');
+			canvas.height = viewport.height;
+			canvas.width = viewport.width;
+
+			const renderContext = {
+				canvasContext: context,
+				viewport: viewport,
+			};
+			page.render(renderContext);
+		});
+	});
+</script>
 {% endblock %}

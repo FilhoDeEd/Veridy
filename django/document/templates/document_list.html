@@ -32,7 +32,7 @@ Documentos Recebidos
 <ul class="list-group">
 	{% for document in documents %}
 	<div class="bg-primary py-2 rounded-top"></div>
-	<li class="list-group-item">
+	<li class="list-group-item mb-3">
 		<a href="{% url 'document_detail' document_id=document.id %}" class="d-block text-reset text-decoration-none">
 			<h5 class="mb-1">{{ document }}</h5>
 			<p class="mb-1">
