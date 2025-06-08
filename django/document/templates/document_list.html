@@ -1,0 +1,54 @@
+<!-- prettier-ignore -->
+{% extends "entity_list_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title_append %}
+Documentos
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'document_list' %}" class="breadcrumb-link" aria-current="page">Documentos</a>
+</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Documentos Recebidos
+{% endblock %}
+
+{% block filters %}
+{{ filter.form|crispy }}
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block results %}
+{% if documents %}
+<ul class="list-group">
+	{% for document in documents %}
+	<div class="bg-primary py-2 rounded-top"></div>
+	<li class="list-group-item">
+		<a href="#" class="d-block text-reset text-decoration-none">
+			<h5 class="mb-1">{{ document }}</h5>
+			<p class="mb-1">
+				<strong>Titular:</strong> {{ document.subject.full_name }}<br />
+				<strong>Instituição:</strong> {{ document.institution.name }}
+			</p>
+			<small>
+				<strong>Enviado em:</strong> {{ document.upload_date|date:"d/m/Y H:i" }}<br />
+				<strong>Atualizado em:</strong> {{ document.update_date|date:"d/m/Y H:i" }}
+			</small>
+		</a>
+	</li>
+	{% endfor %}
+</ul>
+{% else %}
+<div class="alert alert-info">Nenhum documento encontrado.</div>
+<!-- prettier-ignore -->
+{% endif %}
+{% endblock %}

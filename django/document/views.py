@@ -13,7 +13,21 @@ from django_filters.views import FilterView
 from document.forms import DocumentUploadForm
 from institution.mixins import InstitutionRequiredMixin
 from document.models import Document
-from institution.filters import InstitutionFilter
+from document.filters import DocumentFilter
+
+
+class DocumentListView(FilterView):
+    model = Document
+    template_name = 'document_list.html'
+    filterset_class = DocumentFilter
+    context_object_name = 'documents'
+    ordering = ['-upload_date']
+    paginate_by = 12
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['entity_type'] = 'document'
+        return context
 
 
 class DocumentUploadView(InstitutionRequiredMixin, FormView):

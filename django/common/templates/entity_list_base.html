@@ -18,7 +18,9 @@ Listagem
 				class="list-group-item list-group-item-action {% if entity_type == 'institution' %}active{% endif %}">
 				<i class="bi bi-building"></i> Instituições
 			</a>
-			<a href="#" class="list-group-item list-group-item-action {% if entity_type == 'diplomas' %}active{% endif %}">
+			<a
+				href="{% url 'document_list' %}"
+				class="list-group-item list-group-item-action {% if entity_type == 'document' %}active{% endif %}">
 				<i class="bi bi-file-earmark-text"></i> Diplomas
 			</a>
 			<a
@@ -38,7 +40,7 @@ Listagem
 						<button type="submit" class="btn btn-outline-primary shadow-sm"><i class="bi bi-funnel-fill"></i> Filtrar</button>
 					</div>
 					<div class="col-auto">
-						<a href="{% url 'institution_list' %}" class="btn btn-outline-warning shadow-sm"> Limpar </a>
+						<a href="{{ request.path }}" class="btn btn-outline-warning shadow-sm"> Limpar </a>
 					</div>
 				</div>
 			</fieldset>
