@@ -2,10 +2,11 @@ from common.models import UserTypeChoices
 
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.http import Http404
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 
 from django_filters.views import FilterView
@@ -100,3 +101,17 @@ class SubjectEditView(SubjectRequiredMixin, FormView):
     def form_invalid(self, form):
         messages.error(self.request, 'Por favor, corrija os erros abaixo.')
         return super().form_invalid(form)
+
+
+class SubjectDetailView(DetailView):
+    model = Subject
+    template_name = 'subject_detail.html'
+    pk_url_kwarg = 'subject_id'
+    context_object_name = 'subject'
+
+    def get_object(self, queryset=None):
+        subject = super().get_object()
+        print(subject.full_name)
+        if not subject.user.is_active:
+            raise Http404('Titular não encontrado.')
+        return subject

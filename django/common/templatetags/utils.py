@@ -1,5 +1,6 @@
 from common.models import UserTypeChoices
 from django import template
+from django.template.defaultfilters import stringfilter
 from django.urls import reverse
 
 
@@ -36,3 +37,15 @@ def url_by_user_type(context, url_type):
             return '#'
     except Exception:
         return '#'
+
+
+@register.filter(name='split_and_get_first')
+@stringfilter
+def split_and_get_first(value, arg):
+    """
+    Splits the string by 'arg' and returns the first element.
+
+    Usage in templates:
+        {{ my_string|split_and_get_first:"-" }}
+    """
+    return value.split(arg)[0] if value and arg in value else value

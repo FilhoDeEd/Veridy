@@ -31,12 +31,15 @@ Titulares Cadastrados
 {% if subjects %}
 <ul class="list-group">
 	{% for subject in subjects %}
+	<div class="bg-primary py-2 rounded-top"></div>
 	<li class="list-group-item">
-		<h5 class="mb-1">{{ subject.full_name }}</h5>
-		<p class="mb-1"><strong>E-mail:</strong> {{ subject.user.email }}</p>
-		{% if subject.birth_date %}
-		<small><strong>Data de nascimento:</strong> {{ subject.birth_date|date:"d/m/Y" }}</small>
-		{% endif %}
+		<a href="{% url 'subject_detail' subject_id=subject.id %}" class="d-block text-reset text-decoration-none">
+			<h5 class="mb-1">{{ subject.full_name }}</h5>
+			<p class="mb-1"><strong>E-mail:</strong> {{ subject.user.email }}</p>
+			{% if subject.birth_date %}
+			<small><strong>Data de nascimento:</strong> {{ subject.birth_date|date:"d/m/Y" }}</small>
+			{% endif %}
+		</a>
 	</li>
 	{% endfor %}
 </ul>

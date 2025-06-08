@@ -1,0 +1,43 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load utils %}
+
+{% block title_append %}
+Detalhes do Titular
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'subject_list' %}" class="breadcrumb-link">Titulares</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'subject_detail' subject_id=subject.id %}" class="breadcrumb-link" aria-current="page">
+		{{ subject.full_name|split_and_get_first:' ' }}
+	</a>
+</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Detalhes do titular <strong>{{subject.full_name}}</strong>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block content %}
+<div class="card mb-3">
+	<div class="card-header">
+		<strong>Informações do Titular: {{ subject.full_name|split_and_get_first:' ' }}</strong>
+	</div>
+	<div class="card-body">
+		<p><strong>Nome completo:</strong> {{ subject.full_name }}</p>
+		<p><strong>Data de nascimento:</strong> {{ subject.birth_date|date:"d/m/Y"|default:'Não Informado' }}</p>
+		<p><strong>Nome de usuário:</strong> {{ subject.user.username }}</p>
+		<p><strong>E-mail:</strong> {{ subject.user.email }}</p>
+	</div>
+</div>
+{% endblock %}
