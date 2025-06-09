@@ -23,7 +23,8 @@ Titulares Cadastrados
 {% endblock %}
 
 {% block filters %}
-{{ filter.form|crispy }}
+{{ filter.form.full_name|as_crispy_field }}
+{{ filter.form.user__email|as_crispy_field }}
 {% endblock %}
 
 <!-- prettier-ignore -->

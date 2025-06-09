@@ -28,26 +28,30 @@
 			</a>
 		</div>
 		<div class="col-12 col-md-6 mb-2 mb-md-0">
-			<form role="search">
+			<form id="search-form" role="search">
 				<div class="input-group">
 					<button
 						class="btn dropdown-toggle theme-inverse btn-brand"
 						type="button"
+						id="search-dropdown"
 						data-bs-toggle="dropdown"
 						aria-expanded="false">
-						<i class="fas fa-filter theme-inverse"></i>
+						<i class="fas fa-filter theme-inverse"></i> <span>Titulares</span>
 					</button>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">Todos</a></li>
-						<li><a class="dropdown-item" href="#">Titulares</a></li>
-						<li><a class="dropdown-item" href="#">Diplomas</a></li>
-						<li><a class="dropdown-item" href="#">Instituições</a></li>
+						<li><a class="dropdown-item" href="#" data-target="subject">Titulares</a></li>
+						<li><a class="dropdown-item" href="#" data-target="document">Diplomas</a></li>
+						<li><a class="dropdown-item" href="#" data-target="institution">Instituições</a></li>
 					</ul>
-					<input type="search" class="form-control" placeholder="Pesquisar..." aria-label="Search" />
+					<input type="search" name="q" class="form-control" placeholder="Pesquisar..." aria-label="Search" />
 					<button class="btn btn-brand" type="submit">
 						<i class="fas fa-search theme-inverse"></i>
 					</button>
 				</div>
+				<input type="hidden" name="target" id="search-target" value="subject" />
+				<input type="hidden" id="url-subject" value="{% url 'subject_list' %}" />
+				<input type="hidden" id="url-document" value="{% url 'document_list' %}" />
+				<input type="hidden" id="url-institution" value="{% url 'institution_list' %}" />
 			</form>
 		</div>
 		<div class="col-12 col-md-2 d-flex justify-content-end align-items-center gap-2">

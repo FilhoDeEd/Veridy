@@ -23,7 +23,10 @@ Instituições Cadastradas
 {% endblock %}
 
 {% block filters %}
-{{ filter.form|crispy }}
+{{ filter.form.name|as_crispy_field }}
+{{ filter.form.domain|as_crispy_field }}
+{{ filter.form.tax_id|as_crispy_field }}
+{{ filter.form.country|as_crispy_field }}
 {% endblock %}
 
 <!-- prettier-ignore -->

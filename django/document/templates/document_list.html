@@ -23,7 +23,10 @@ Documentos Recebidos
 {% endblock %}
 
 {% block filters %}
-{{ filter.form|crispy }}
+{{ filter.form.subject__full_name|as_crispy_field }}
+{{ filter.form.institution__name|as_crispy_field }}
+{{ filter.form.upload_date_after|as_crispy_field }}
+{{ filter.form.upload_date_before|as_crispy_field }}
 {% endblock %}
 
 <!-- prettier-ignore -->
