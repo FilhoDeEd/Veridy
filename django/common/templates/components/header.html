@@ -36,12 +36,24 @@
 						id="search-dropdown"
 						data-bs-toggle="dropdown"
 						aria-expanded="false">
-						<i class="fas fa-filter theme-inverse"></i> <span>Titulares</span>
+						<i id="search-icon" class="fas fa-user theme-inverse"></i>
 					</button>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#" data-target="subject">Titulares</a></li>
-						<li><a class="dropdown-item" href="#" data-target="document">Diplomas</a></li>
-						<li><a class="dropdown-item" href="#" data-target="institution">Instituições</a></li>
+						<li>
+							<a class="dropdown-item" href="#" data-target="subject" data-icon="fa-user">
+								<i class="fas fa-user"></i> Titulares
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#" data-target="document" data-icon="fa-certificate">
+								<i class="fas fa-certificate"></i> Diplomas
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#" data-target="institution" data-icon="fa-university">
+								<i class="fas fa-university"></i> Instituições
+							</a>
+						</li>
 					</ul>
 					<input type="search" name="q" class="form-control" placeholder="Pesquisar..." aria-label="Search" />
 					<button class="btn btn-brand" type="submit">
