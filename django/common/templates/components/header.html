@@ -41,17 +41,17 @@
 					<ul class="dropdown-menu">
 						<li>
 							<a class="dropdown-item" href="#" data-target="subject" data-icon="fa-user">
-								<i class="fas fa-user"></i> Titulares
+								<i class="fas fa-user me-2"></i> Titulares
 							</a>
 						</li>
 						<li>
 							<a class="dropdown-item" href="#" data-target="document" data-icon="fa-certificate">
-								<i class="fas fa-certificate"></i> Diplomas
+								<i class="fas fa-certificate me-2"></i> Diplomas
 							</a>
 						</li>
 						<li>
 							<a class="dropdown-item" href="#" data-target="institution" data-icon="fa-university">
-								<i class="fas fa-university"></i> Instituições
+								<i class="fas fa-university me-2"></i> Instituições
 							</a>
 						</li>
 					</ul>
@@ -80,24 +80,30 @@
 				<ul class="dropdown-menu dropdown-menu-end text-small shadow">
 					{% if user.is_authenticated %}
 					<li>
-						<a class="dropdown-item" href="{% url_by_user_type 'profile' %}">Perfil</a>
+						<a class="dropdown-item" href="{% url_by_user_type 'profile' %}">
+							<i class="fas fa-user-circle me-2"></i> Perfil
+						</a>
 					</li>
-					<li><a class="dropdown-item" href="#">Configurações</a></li>
+					<li>
+						<a class="dropdown-item" href="#"> <i class="fas fa-cog me-2"></i> Configurações </a>
+					</li>
 					<li>
 						<hr class="dropdown-divider" />
 					</li>
 					<li>
-						<form action="{% url 'logout' %}" method="post">
+						<form action="{% url 'logout' %}" method="post" class="m-0">
 							{% csrf_token %}
-							<button type="submit" class="dropdown-item text-danger">Sair</button>
+							<button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt me-2"></i> Sair</button>
 						</form>
 					</li>
 					{% else %}
 					<li>
-						<a class="dropdown-item" href="{% url 'subject_registration' %}">Cadastrar</a>
+						<a class="dropdown-item" href="{% url 'login' %}"> <i class="fas fa-sign-in-alt me-2"></i> Fazer Login </a>
 					</li>
 					<li>
-						<a class="dropdown-item" href="{% url 'login' %}">Fazer Login</a>
+						<a class="dropdown-item" href="{% url 'subject_registration' %}">
+							<i class="fas fa-user-plus me-2"></i> Cadastrar
+						</a>
 					</li>
 					{% endif %}
 				</ul>
