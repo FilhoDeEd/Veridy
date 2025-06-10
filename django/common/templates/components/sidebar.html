@@ -10,49 +10,62 @@
 		<div class="offcanvas-body p-0">
 			<div class="sections-container">
 				<div class="section">
-					<h6 class="section-title text-dark">INSTITUIÇÕES</h6>
+					<h6 class="section-title text-dark">GERAL</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item">
-							<a class="sidebar-link text-dark" href="#">
-								<i class="fas fa-tachometer-alt me-2"></i>
-								Dashboard
+							<a class="sidebar-link text-dark" href="{% url 'home' %}"> <i class="fas fa-home me-2"></i> Início</a>
+						</li>
+						<li class="nav-item">
+							<a class="sidebar-link text-dark" href="{% url 'institution_list' %}">
+								<i class="fas fa-university me-2"></i> Instituições
 							</a>
 						</li>
-						<hr class="nav-divider text-dark" />
 						<li class="nav-item">
-							<a class="sidebar-link text-dark" href="#">
-								<i class="fas fa-university me-2"></i>
-								Instituições
+							<a class="sidebar-link text-dark" href="{% url 'document_list' %}">
+								<i class="fas fa-certificate me-2"></i> Diplomas
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="sidebar-link text-dark" href="{% url 'subject_list' %}">
+								<i class="fas fa-user me-2"></i> Titulares
 							</a>
 						</li>
 					</ul>
 				</div>
+				{% if user.is_authenticated %}
 				<hr class="section-divider text-dark" />
+				{% if user.is_institution %}
 				<div class="section">
-					<h6 class="section-title text-dark">DOCUMENTOS</h6>
+					<h6 class="section-title text-dark">INSTITUIÇÃO</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item">
-							<a class="sidebar-link text-dark" href="#">
-								<i class="fas fa-certificate me-2"></i>
-								Certificados
+							<a class="sidebar-link text-dark" href="{% url 'institution_profile' %}">
+								<i class="fas fa-id-card me-2"></i> Meu Perfil
 							</a>
 						</li>
-						<hr class="nav-divider text-dark" />
 						<li class="nav-item">
 							<a class="sidebar-link text-dark" href="{% url 'document_upload' %}">
-								<i class="fas fa-certificate me-2"></i>
-								Novo Certificado
-							</a>
-						</li>
-						<hr class="nav-divider text-dark" />
-						<li class="nav-item">
-							<a class="sidebar-link text-dark" href="#">
-								<i class="fas fa-file-contract me-2"></i>
-								Contratos
+								<i class="fas fa-upload me-2"></i> Novo Certificado
 							</a>
 						</li>
 					</ul>
 				</div>
+				<!-- prettier-ignore -->
+				{% endif %}
+				{% if user.is_subject %}
+				<div class="section">
+					<h6 class="section-title text-dark">TITULAR</h6>
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="sidebar-link text-dark" href="{% url 'subject_profile' %}">
+								<i class="fas fa-id-card me-2"></i> Meu Perfil
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- prettier-ignore -->
+				{% endif %}
+				{% endif %}
 				<hr class="section-divider text-dark" />
 			</div>
 		</div>
