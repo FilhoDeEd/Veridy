@@ -56,7 +56,7 @@ Visualização do Documento
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
 <script>
-	const url = '{{ document.file.url }}';
+	const url = `https://ipfs.io/ipfs/{{ document.ipfs_cid }}`;
 	const pdfjsLib = window['pdfjs-dist/build/pdf'];
 	pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 	const loadingTask = pdfjsLib.getDocument(url);

@@ -25,6 +25,8 @@ class Document(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT, related_name='documents')
     institution = models.ForeignKey(Institution, on_delete=models.PROTECT, related_name='documents')
 
+    ipfs_cid = models.CharField(max_length=255, blank=True, null=True)
+
     upload_date = models.DateTimeField(editable=False)
     update_date = models.DateTimeField()
 

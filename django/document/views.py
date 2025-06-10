@@ -1,7 +1,5 @@
-from common.models import UserTypeChoices
-
+from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView
@@ -9,9 +7,12 @@ from django.views.generic import DetailView, FormView
 from django_filters.views import FilterView
 
 from document.forms import DocumentUploadForm
-from institution.mixins import InstitutionRequiredMixin
 from document.models import Document
 from document.filters import DocumentFilter
+
+from institution.mixins import InstitutionRequiredMixin
+
+from ipfs_api import ipfshttpclient
 
 
 class DocumentListView(FilterView):
@@ -39,20 +40,28 @@ class DocumentUploadView(InstitutionRequiredMixin, FormView):
 
         try:
             with transaction.atomic():
-                Document.objects.create(
+                document = Document.objects.create(
                     file=data.get('file'),
                     subject=data.get('subject'),
                     institution=institution
                 )
+
+                client = ipfshttpclient.connect()
+                res = client.add(document.file.path)
+                ipfs_cid = res['Hash']
+
+                document.ipfs_cid = ipfs_cid
+                document.save()
+
             messages.success(self.request, 'Certificado enviado com sucesso!')
-        except Exception:
-            messages.error(self.request, 'Ocorreu um erro ao processar o certificado. Tente novamente.')
+        except Exception as e:
+            print(e)
             return self.form_invalid(form)
 
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        messages.error(self.request, 'Erro ao enviar o formulário. Verifique os campos e tente novamente.')
+        messages.error(self.request, 'Ocorreu um erro ao processar o certificado. Tente novamente.')
         return super().form_invalid(form)
 
 
