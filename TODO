@@ -6,18 +6,15 @@
 - [x] Página de perfil
   - [x] Página de edição dos dados
 - [x] Página para listar Instituições
-- [ ] Página pública para detalhar uma instituição específica
+- [x] Página pública para detalhar uma instituição específica
 - [ ] Página de verificação
   - [ ] Instruções para rodar o servidor de verificação
   - [ ] Botão para iniciar verificação
   - [ ] Status atual da verificação
   - [ ] Histórico de tentativas de verificação
-- [ ] Página de emissão de diplomas
-  - [ ] Formulário de emissão
-  - [ ] Upload opcional de PDF
-  - [ ] Controle de visibilidade (público/privado)
+- [x] Formulário de emissão
 - [ ] Página de diplomas emitidos
-  - [ ] Listagem com busca/filtro
+  - [x] Listagem com busca/filtro
   - [ ] Acesso rápido para revogação ou visualização
 - [ ] Página de revogação de diplomas
   - [ ] Formulário com motivo e confirmação
