@@ -140,11 +140,11 @@ class InstitutionEditForm(forms.ModelForm):
             attrs={'placeholder': 'e.g. ufpe.br'})
     )
 
-    institutional_email = forms.EmailField(
-        label='E-mail Institucional',
-        widget=forms.EmailInput(
-            attrs={'placeholder': 'e.g. contato@ufpe.br'})
-    )
+    # email = forms.EmailField(
+    #     label='E-mail Institucional',
+    #     widget=forms.EmailInput(
+    #         attrs={'placeholder': 'e.g. contato@ufpe.br'})
+    # )
 
     phone = forms.CharField(
         label='Telefone',
@@ -186,7 +186,7 @@ class InstitutionEditForm(forms.ModelForm):
             'name',
             'tax_id',
             'domain',
-            'institutional_email',
+            # 'email',
             'phone',
             'city',
             'state',
