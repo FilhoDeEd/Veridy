@@ -32,6 +32,12 @@ Visualização do Documento
 	<div class="card-body">
 		<p><strong>Arquivo:</strong> {{ document }}</p>
 		<p>
+			<strong>IPFS:</strong>
+			<a href="https://ipfs.io/ipfs/{{ document.ipfs_cid }}" target="_blank" rel="noopener noreferrer">
+				{{ document.ipfs_cid }}
+			</a>
+		</p>
+		<p>
 			<strong>Titular:</strong>
 			<a href="{% url 'subject_detail' subject_id=document.subject.id %}"> {{ document.subject.full_name }} </a>
 		</p>
