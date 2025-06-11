@@ -35,7 +35,7 @@ Instituições Cadastradas
 <ul class="list-group">
 	{% for institution in institutions %}
 	<div class="bg-primary py-2 rounded-top"></div>
-	<li class="list-group-item">
+	<li class="list-group-item mb-3">
 		<a
 			href="{% url 'institution_detail' institution_id=institution.id %}"
 			class="d-block text-reset text-decoration-none">
