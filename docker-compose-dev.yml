@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_dev
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    expose:
+      - ${DB_PORT}
+    networks:
+      - compose_network
+
+  django:
+    build: .
+    image: django_image
+    container_name: django_dev
+    environment:
+      ENVIRONMENT: development
+      SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    volumes:
+      - ./django:/app/django
+      - media_volume:/media
+    ports:
+      - "${DJANGO_PORT}:8000"
+    networks:
+      - compose_network
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+    name: dev_db_data
+    driver: local
+  media_volume:
+    name: dev_media_volume
+    driver: local
+
+networks:
+  compose_network:
+    name: dev_network
+    driver: bridge

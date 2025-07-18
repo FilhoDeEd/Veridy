@@ -20,23 +20,36 @@ def get_secret(key: str, default: str = '') -> str:
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ENVIRONMENT = os.getenv('ENVIRONMENT')
+SECRET_KEY = get_secret('SECRET_KEY')
 
-SECRET_KEY = 'django-insecure-n+kcttfsm2zl2$83_^+-@2ui9)=03&f38a^(m4qcq*0-bf3+__'
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT', '5432')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = get_secret('DB_PASSWORD')
+DB_NAME = os.getenv('DB_NAME')
+
+
+if ENVIRONMENT == Envs.PRODUCTION:
+    pass
+elif ENVIRONMENT == Envs.STAGING:
+    pass
+elif ENVIRONMENT == Envs.DEVELOPMENT:
+    DEBUG = True
+    ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
+
+
+if ENVIRONMENT == Envs.PRODUCTION:
+    pass
+elif ENVIRONMENT == Envs.STAGING:
+    pass
+elif ENVIRONMENT == Envs.DEVELOPMENT:
+    STATIC_URL = 'static/'
+    MEDIA_URL = 'media/'
+    MEDIA_ROOT = '/media/'
 
 
 AUTH_USER_MODEL = 'common.VeridyUser'
-
-
-DEBUG = True
-
-
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
-
-
-STATIC_URL = 'static/'
-MEDIA_URL = 'media/'
-MEDIA_ROOT = '/home/edson/media/'  # Temporário enquanto não tem Docker
-
 
 AUTHENTICATION_BACKENDS = [
     'common.backends.EmailOrUsernameBackend',
@@ -101,9 +114,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": DB_NAME,
+        "USER": DB_USER,
+        "PASSWORD": DB_PASSWORD,
+        "HOST": DB_HOST,
+        "PORT": DB_PORT,
     }
 }
 
