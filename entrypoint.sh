@@ -3,6 +3,7 @@
 python manage.py wait_for_db
 python manage.py makemigrations --noinput
 python manage.py migrate
+python manage.py create_admin
 
 if [ "$ENVIRONMENT" = "development" ]; then
     echo 'Running Django development server...'

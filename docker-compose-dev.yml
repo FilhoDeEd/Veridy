@@ -25,11 +25,14 @@ services:
     environment:
       ENVIRONMENT: development
       SECRET_KEY: ${DJANGO_SECRET_KEY}
+      ADMIN_USERS:  /run/secrets/admin_users
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
+    secrets:
+       - admin_users
     volumes:
       - ./django:/app/django
       - media_volume:/media
@@ -52,3 +55,7 @@ networks:
   compose_network:
     name: dev_network
     driver: bridge
+
+secrets:
+   admin_users:
+     file: admin_users.json

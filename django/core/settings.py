@@ -22,6 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENVIRONMENT = os.getenv('ENVIRONMENT')
 SECRET_KEY = get_secret('SECRET_KEY')
+ADMIN_USERS_PATH = os.getenv('ADMIN_USERS')
 
 DB_HOST = os.getenv('DB_HOST')
 DB_PORT = os.getenv('DB_PORT', '5432')
