@@ -27,47 +27,14 @@ Cadastrar instituição
 	{% csrf_token %}
 	<div class="shadow-sm">
 		<div class="bg-primary py-2 rounded-top"></div>
-		<fieldset class="border rounded-bottom p-3 mb-4">
+		<fieldset class="border rounded-bottom p-3 mb-3">
 			<legend>Dados da Instituição</legend>
 			<div class="row">
-				<div class="col-md-6">{{ form.name|as_crispy_field }}</div>
-				<div class="col-md-6">{{ form.tax_id|as_crispy_field }}</div>
+				<div class="col-md-12">{{ form.name|as_crispy_field }}</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4">{{ form.domain|as_crispy_field }}</div>
-				<div class="col-md-4">{{ form.email|as_crispy_field }}</div>
-				<div class="col-md-4">{{ form.phone|as_crispy_field }}</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">{{ form.full_address|as_crispy_field }}</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">{{ form.city|as_crispy_field }}</div>
-				<div class="col-md-4">{{ form.state|as_crispy_field }}</div>
-				<div class="col-md-4">{{ form.country|as_crispy_field }}</div>
-			</div>
-		</fieldset>
-	</div>
-	<div class="shadow-sm">
-		<div class="bg-primary py-2 rounded-top"></div>
-		<fieldset class="border rounded-bottom p-3 mb-4">
-			<legend>Representante Legal</legend>
-			<div class="row">
-				<div class="col-md-6">{{ form.representative_name|as_crispy_field }}</div>
-				<div class="col-md-6">{{ form.representative_role|as_crispy_field }}</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">{{ form.representative_email|as_crispy_field }}</div>
-				<div class="col-md-6">{{ form.representative_phone|as_crispy_field }}</div>
-			</div>
-		</fieldset>
-	</div>
-	<div class="shadow-sm">
-		<div class="bg-primary py-2 rounded-top"></div>
-		<fieldset class="border rounded-bottom p-3 mb-3">
-			<legend>Dados do Usuário</legend>
-			<div class="row">
-				<div class="col-md-12">{{ form.username|as_crispy_field }}</div>
+				<div class="col-md-6">{{ form.username|as_crispy_field }}</div>
+				<div class="col-md-6">{{ form.email|as_crispy_field }}</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">{{ form.password1|as_crispy_field }}</div>

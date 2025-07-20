@@ -34,14 +34,13 @@ Perfil da instituição
 	</div>
 	<div class="card-body">
 		<p><strong>Nome:</strong> {{ institution.name }}</p>
-		<p><strong>CNPJ:</strong> {{ institution.tax_id }}</p>
-		<p><strong>Domínio:</strong> {{ institution.domain }}</p>
+		<p><strong>Domínio:</strong> {{ institution.domain|default_if_none:'Pendente' }}</p>
 		<p><strong>E-mail institucional:</strong> {{ institution.user.email }}</p>
-		<p><strong>Telefone:</strong> {{ institution.phone }}</p>
-		<p><strong>Endereço completo:</strong> {{ institution.full_address }}</p>
-		<p><strong>Cidade:</strong> {{ institution.city }}</p>
-		<p><strong>Estado:</strong> {{ institution.state }}</p>
-		<p><strong>País:</strong> {{ institution.country }}</p>
+		<p><strong>Telefone:</strong> {{ institution.phone|default_if_none:'Pendente' }}</p>
+		<p><strong>Endereço completo:</strong> {{ institution.full_address|default_if_none:'Pendente' }}</p>
+		<p><strong>Cidade:</strong> {{ institution.city|default_if_none:'Pendente' }}</p>
+		<p><strong>Estado:</strong> {{ institution.state|default_if_none:'Pendente' }}</p>
+		<p><strong>País:</strong> {{ institution.country|default_if_none:'Pendente' }}</p>
 	</div>
 </div>
 <div class="card mb-3">
@@ -55,10 +54,14 @@ Perfil da instituição
 		</a>
 	</div>
 	<div class="card-body">
-		<p><strong>Nome:</strong> {{ institution.representative.name }}</p>
-		<p><strong>Cargo:</strong> {{ institution.representative.role }}</p>
-		<p><strong>E-mail:</strong> {{ institution.representative.email }}</p>
-		<p><strong>Telefone:</strong> {{ institution.representative.phone }}</p>
+		{% if institution.representative %}
+		<p><strong>Nome:</strong> {{ institution.representative.name|default_if_none:'Pendente' }}</p>
+		<p><strong>Cargo:</strong> {{ institution.representative.role|default_if_none:'Pendente' }}</p>
+		<p><strong>E-mail:</strong> {{ institution.representative.email|default_if_none:'Pendente' }}</p>
+		<p><strong>Telefone:</strong> {{ institution.representative.phone|default_if_none:'Pendente' }}</p>
+		{% else %}
+		<p><strong>Pendente</strong></p>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}

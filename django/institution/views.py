@@ -1,7 +1,7 @@
 from common.models import UserTypeChoices
 
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model, login
 from django.db import transaction
 from django.http import Http404
 from django.urls import reverse_lazy
@@ -52,31 +52,21 @@ class InstitutionRegistrationView(FormView):
         try:
             with transaction.atomic():
                 user = UserModel.objects.create_user(
-                    username=data.get('username'),
-                    email=data.get('email'),
-                    password=data.get('password1'),
+                    username=data['username'],
+                    email=data['email'],
+                    password=data['password1'],
                     user_type=UserTypeChoices.INSTITUTION
                 )
-
-                representative = LegalRepresentative.objects.create(
-                    name=data.get('representative_name'),
-                    role=data.get('representative_role'),
-                    email=data.get('representative_email'),
-                    phone=data.get('representative_phone')
-                )
-
-                Institution.objects.create(
+                institution = Institution.objects.create(
                     user=user,
-                    name=data.get('name'),
-                    tax_id=data.get('tax_id'),
-                    domain=data.get('domain'),
-                    phone=data.get('phone'),
-                    city=data.get('city'),
-                    state=data.get('state'),
-                    country=data.get('country'),
-                    full_address=data.get('full_address'),
-                    representative=representative
+                    name=data['name']
                 )
+                institution.save()
+
+            username = data['username']
+            password = data['password1']
+            auth_user = authenticate(self.request, username=username, password=password)
+            login(self.request, auth_user)
 
             messages.success(self.request, 'Instituição cadastrada com sucesso!')
         except Exception:
