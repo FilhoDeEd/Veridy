@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:16
-    container_name: postgres_dev
+    container_name: veridy_dev_postgres
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -21,7 +21,7 @@ services:
   django:
     build: .
     image: django_image
-    container_name: django_dev
+    container_name: veridy_dev_django
     environment:
       ENVIRONMENT: development
       SECRET_KEY: ${DJANGO_SECRET_KEY}
@@ -45,17 +45,17 @@ services:
 
 volumes:
   db_data:
-    name: dev_db_data
+    name: veridy_dev_db_data
     driver: local
   media_volume:
-    name: dev_media_volume
+    name: veridy_dev_media_volume
     driver: local
 
 networks:
   compose_network:
-    name: dev_network
+    name: veridy_dev_network
     driver: bridge
 
 secrets:
    admin_users:
-     file: admin_users.json
+     file: .secrets/admin_users.json

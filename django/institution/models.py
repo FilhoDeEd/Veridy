@@ -13,13 +13,13 @@ class LegalRepresentative(models.Model):
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
 
-    created_at = models.DateTimeField(editable=False)
-    updated_at = models.DateTimeField()
+    creation_date = models.DateTimeField(editable=False)
+    update_date = models.DateTimeField()
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.created_at = timezone.now()
-        self.updated_at = timezone.now()
+            self.creation_date = timezone.now()
+        self.update_date = timezone.now()
         return super().save(*args, **kwargs)
 
     def __str__(self):
@@ -46,7 +46,8 @@ class Institution(models.Model):
     representative = models.ForeignKey(LegalRepresentative, on_delete=models.SET_NULL, related_name='institutions', null=True, blank=True)
 
     domain = models.CharField(max_length=255, null=True, blank=True)
-    verified = models.BooleanField(default=False)
+    domain_verified = models.BooleanField(default=False)
+    domain_verification_date = models.DateTimeField()
 
     status = models.CharField(
         max_length=1,
@@ -54,8 +55,27 @@ class Institution(models.Model):
         default=Status.INCOMPLETE
     )
 
-    created_at = models.DateTimeField(editable=False)
-    updated_at = models.DateTimeField()
+    creation_date = models.DateTimeField(editable=False)
+    update_date = models.DateTimeField()
+
+    @property
+    def is_profile_complete(self):
+        basic_data_complete = all([
+            self.phone,
+            self.city,
+            self.state,
+            self.country,
+            self.full_address
+        ])
+
+        representative_complete = all([
+            self.representative.name,
+            self.representative.role,
+            self.representative.email,
+            self.representative.phone
+        ]) if self.representative else False
+
+        return basic_data_complete and representative_complete
 
     @property
     def is_active(self):
@@ -63,8 +83,15 @@ class Institution(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.created_at = timezone.now()
-        self.updated_at = timezone.now()
+            self.creation_date = timezone.now()
+        self.update_date = timezone.now()
+
+        if self.status != self.Status.VERIFIED:
+            if self.is_profile_complete:
+                self.status = self.Status.PENDING
+            else:
+                self.status = self.Status.INCOMPLETE
+
         return super().save(*args, **kwargs)
 
     def __str__(self):
