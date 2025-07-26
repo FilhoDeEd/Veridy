@@ -115,13 +115,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": DB_NAME,
-        "USER": DB_USER,
-        "PASSWORD": DB_PASSWORD,
-        "HOST": DB_HOST,
-        "PORT": DB_PORT,
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
     }
 }
 
@@ -149,14 +149,14 @@ USE_L10N = True
 USE_TZ = True
 
 
-LOGIN_URL = "/auth/login/"
-LOGOUT_URL = "/auth/logout/"
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/auth/login/"
+LOGIN_URL = '/auth/login/'
+LOGOUT_URL = '/auth/logout/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/auth/login/'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

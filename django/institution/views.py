@@ -3,7 +3,7 @@ from common.models import UserTypeChoices
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login
 from django.db import transaction
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, TemplateView
 
@@ -40,6 +40,13 @@ class InstitutionRegistrationView(FormView):
     template_name = 'institution_registration.html'
     form_class = InstitutionRegistrationForm
     success_url = reverse_lazy('home')
+
+    # Colocar em Subject tbm
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse_lazy('home'))
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
