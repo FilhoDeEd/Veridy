@@ -30,7 +30,8 @@ Cadastrar instituição
 		<fieldset class="border rounded-bottom p-3 mb-3">
 			<legend>Dados da Instituição</legend>
 			<div class="row">
-				<div class="col-md-12">{{ form.name|as_crispy_field }}</div>
+				<div class="col-md-9">{{ form.name|as_crispy_field }}</div>
+				<div class="col-md-3">{{ form.acronym|as_crispy_field }}</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">{{ form.username|as_crispy_field }}</div>

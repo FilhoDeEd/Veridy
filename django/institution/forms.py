@@ -9,11 +9,18 @@ UserModel = get_user_model()
 
 class InstitutionRegistrationForm(UserCreationForm):
     name = forms.CharField(
-        label='Nome da Instituição',
+        label='Nome',
         max_length=255,
         widget=forms.TextInput(
             attrs={'autofocus': True}
         )
+    )
+
+    acronym = forms.CharField(
+        label='Sigla',
+        max_length=255,
+        required=False,
+        widget=forms.TextInput()
     )
 
     class Meta:

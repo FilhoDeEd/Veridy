@@ -59,7 +59,8 @@ class InstitutionRegistrationView(FormView):
                 )
                 institution = Institution.objects.create(
                     user=user,
-                    name=data['name']
+                    name=data['name'],
+                    acronym=data['acronym']
                 )
                 institution.save()
 

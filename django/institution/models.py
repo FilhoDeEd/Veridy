@@ -36,6 +36,8 @@ class Institution(models.Model):
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE)
 
     name = models.CharField(max_length=255)
+    acronym = models.CharField(max_length=255, null=True, blank=True)
+
     phone = models.CharField(max_length=20, null=True, blank=True)
 
     city = models.CharField(max_length=255, null=True, blank=True)
@@ -47,7 +49,7 @@ class Institution(models.Model):
 
     domain = models.CharField(max_length=255, null=True, blank=True)
     domain_verified = models.BooleanField(default=False)
-    domain_verification_date = models.DateTimeField()
+    domain_verification_date = models.DateTimeField(null=True, blank=True)
 
     status = models.CharField(
         max_length=1,
