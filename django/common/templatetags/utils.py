@@ -49,3 +49,25 @@ def split_and_get_first(value, arg):
         {{ my_string|split_and_get_first:"-" }}
     """
     return value.split(arg)[0] if value and arg in value else value
+
+
+@register.filter(name='default_if_none_or_blank')
+def default_if_none_or_blank(value, default=''):
+    """
+    Returns a default value if the given value is None or a blank string.
+
+    This filter is useful in templates to avoid displaying empty or undefined fields.
+
+    Example usage in templates:
+        {{ institution.phone|default_if_none_or_blank:"Pending" }}
+
+    Args:
+        value (any): The original value to evaluate.
+        default (str): The fallback value to return if 'value' is None or blank.
+
+    Returns:
+        str: The original value if present and non-blank; otherwise, the default.
+    """
+    if value is None or str(value).strip() == '':
+        return default
+    return value

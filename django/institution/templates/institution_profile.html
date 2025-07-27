@@ -1,5 +1,6 @@
 <!-- prettier-ignore -->
 {% extends 'base.html' %}
+{% load utils %}
 
 {% block title_append %}
 Perfil da Instituição
@@ -22,46 +23,106 @@ Perfil da instituição
 {% endblock %}
 
 {% block content %}
-<div class="card mb-3">
-	<div class="card-header">
-		<strong>Informações da Instituição</strong>
-		<a
-			href="{% url 'institution_edit' %}"
-			class="btn btn-link btn-md position-absolute end-0 top-0 me-1"
-			title="Editar Informações">
-			<i class="fas fa-edit"></i>
-		</a>
-	</div>
-	<div class="card-body">
-		<p><strong>Nome:</strong> {{ institution.name }}</p>
-		<p><strong>Domínio:</strong> {{ institution.domain|default_if_none:'Pendente' }}</p>
-		<p><strong>E-mail institucional:</strong> {{ institution.user.email }}</p>
-		<p><strong>Telefone:</strong> {{ institution.phone|default_if_none:'Pendente' }}</p>
-		<p><strong>Endereço completo:</strong> {{ institution.full_address|default_if_none:'Pendente' }}</p>
-		<p><strong>Cidade:</strong> {{ institution.city|default_if_none:'Pendente' }}</p>
-		<p><strong>Estado:</strong> {{ institution.state|default_if_none:'Pendente' }}</p>
-		<p><strong>País:</strong> {{ institution.country|default_if_none:'Pendente' }}</p>
+{% if institution.status == 'I' %}
+<div class="alert alert-warning d-flex align-items-center gap-2 mb-4" role="alert">
+	<i class="fas fa-exclamation-circle fa-lg"></i>
+	<div>
+		<strong>Cadastro Incompleto:</strong>
+		Preencha todos os dados pendentes para iniciar o processo de verificação.
 	</div>
 </div>
+{% elif institution.status == 'P' %}
+<div class="alert alert-info d-flex align-items-center gap-2 justify-content-between flex-wrap mb-4" role="alert">
+	<div class="d-flex align-items-center gap-2">
+		<i class="fas fa-info-circle fa-lg"></i>
+		<div>
+			<strong>Aguardando Verificação:</strong>
+			Adicione um registro <code>TXT</code> no domínio institucional para confirmar a propriedade.
+		</div>
+	</div>
+	<a href="#" class="btn btn-primary btn-sm mt-2 mt-md-0 theme-inverse"> Iniciar Verificação </a>
+</div>
+{% elif institution.status == 'V' %}
+<div class="alert alert-success d-flex align-items-center gap-2 mb-4" role="alert">
+	<i class="fas fa-check-circle fa-lg"></i>
+	<div>
+		<strong>Instituição Verificada:</strong>
+		Todos os dados estão completos e o domínio foi confirmado com sucesso.
+	</div>
+</div>
+{% elif institution.status == 'R' %}
+<div class="alert alert-danger d-flex align-items-center gap-2 mb-4" role="alert">
+	<i class="fas fa-times-circle fa-lg"></i>
+	<div>
+		<strong>Verificação Rejeitada:</strong>
+		O domínio fornecido não pôde ser validado. Verifique o registro DNS ou tente novamente.
+	</div>
+</div>
+{% endif %}
+
+<div class="row mb-3">
+	<div class="col-md-8 mb-3 mb-md-0">
+		<div class="card h-100">
+			<div class="card-header">
+				<strong>Informações Básicas</strong>
+				<a
+					href="{% url 'institution_edit_basic' %}"
+					class="btn btn-link btn-md position-absolute end-0 top-0 me-1"
+					title="Editar Dados Básicos">
+					<i class="fas fa-edit"></i>
+				</a>
+			</div>
+			<div class="card-body">
+				<p><strong>Nome:</strong> {{ institution.name }}</p>
+				<p><strong>Sigla:</strong> {{ institution.acronym|default_if_none_or_blank:'Não Informado' }}</p>
+				<p><strong>E-mail institucional:</strong> {{ institution.user.email }}</p>
+				<p><strong>Telefone:</strong> {{ institution.phone|default_if_none_or_blank:'Pendente' }}</p>
+				{% if institution.status == 'V' %}
+				<p><strong>Domínio:</strong> {{ institution.domain|default_if_none_or_blank:'Pendente' }}</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="card h-100">
+			<div class="card-header">
+				<strong>Representante Legal</strong>
+				<a
+					href="{% url 'legal_representative_edit' %}"
+					class="btn btn-link btn-md position-absolute end-0 top-0 me-1"
+					title="Editar Representante Legal">
+					<i class="fas fa-edit"></i>
+				</a>
+			</div>
+			<div class="card-body">
+				{% if institution.representative %}
+				<p><strong>Nome:</strong> {{ institution.representative.name|default_if_none_or_blank:'Pendente' }}</p>
+				<p><strong>Cargo:</strong> {{ institution.representative.role|default_if_none_or_blank:'Pendente' }}</p>
+				<p><strong>E-mail:</strong> {{ institution.representative.email|default_if_none_or_blank:'Pendente' }}</p>
+				<p><strong>Telefone:</strong> {{ institution.representative.phone|default_if_none_or_blank:'Pendente' }}</p>
+				{% else %}
+				<p>Nenhum representante legal vinculado.</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="card mb-3">
 	<div class="card-header">
-		<strong>Representante Legal</strong>
+		<strong>Endereço</strong>
 		<a
-			href="{% url 'legal_representative_edit' %}"
+			href="{% url 'institution_edit_address' %}"
 			class="btn btn-link btn-md position-absolute end-0 top-0 me-1"
-			title="Editar Informações">
+			title="Editar Endereço">
 			<i class="fas fa-edit"></i>
 		</a>
 	</div>
 	<div class="card-body">
-		{% if institution.representative %}
-		<p><strong>Nome:</strong> {{ institution.representative.name|default_if_none:'Pendente' }}</p>
-		<p><strong>Cargo:</strong> {{ institution.representative.role|default_if_none:'Pendente' }}</p>
-		<p><strong>E-mail:</strong> {{ institution.representative.email|default_if_none:'Pendente' }}</p>
-		<p><strong>Telefone:</strong> {{ institution.representative.phone|default_if_none:'Pendente' }}</p>
-		{% else %}
-		<p><strong>Pendente</strong></p>
-		{% endif %}
+		<p><strong>Cidade:</strong> {{ institution.city|default_if_none_or_blank:'Pendente' }}</p>
+		<p><strong>Estado:</strong> {{ institution.state|default_if_none_or_blank:'Pendente' }}</p>
+		<p><strong>País:</strong> {{ institution.country|default_if_none_or_blank:'Pendente' }}</p>
+		<p><strong>Endereço Completo:</strong> {{ institution.full_address|default_if_none_or_blank:'Pendente' }}</p>
 	</div>
 </div>
 {% endblock %}

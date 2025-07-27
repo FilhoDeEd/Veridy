@@ -9,7 +9,12 @@ from django.views.generic import DetailView, FormView, TemplateView
 
 from django_filters.views import FilterView
 
-from institution.forms import InstitutionEditForm, InstitutionRegistrationForm, LegalRepresentativeForm
+from institution.forms import (
+    InstitutionEditAddressForm,
+    InstitutionEditBasicForm,
+    InstitutionRegistrationForm,
+    LegalRepresentativeForm
+)
 from institution.mixins import InstitutionRequiredMixin
 from institution.models import Institution, LegalRepresentative
 from institution.filters import InstitutionFilter
@@ -96,25 +101,41 @@ class InstitutionProfileView(InstitutionRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
 
-class InstitutionEditView(InstitutionRequiredMixin, FormView):
-    template_name = 'institution_edit.html'
-    form_class = InstitutionEditForm
+class InstitutionEditBasicView(InstitutionRequiredMixin, FormView):
+    template_name = 'institution_edit_basic.html'
+    form_class = InstitutionEditBasicForm
     success_url = reverse_lazy('institution_profile')
 
     def get_form_kwargs(self):
-        form_kwargs = super().get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         self.institution = self.request.user.institution
-        form_kwargs.update({'instance': self.institution})
-        return form_kwargs
+        kwargs['instance'] = self.institution
+        return kwargs
 
-    def form_valid(self, form: InstitutionEditForm):
-        tax_id = form.cleaned_data.get('tax_id')
-        if Institution.objects.filter(tax_id=tax_id).exclude(id=self.institution.id).exists():
-            form.add_error('tax_id', 'Uma instituição com este CNPJ já está cadastrada.')
-            return self.form_invalid(form)
-
+    def form_valid(self, form: InstitutionEditBasicForm):
         form.save()
-        messages.success(self.request, 'Dados da instituição atualizados com sucesso!')
+        messages.success(self.request, 'Dados básicos atualizados com sucesso!')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Por favor, corrija os erros abaixo.')
+        return super().form_invalid(form)
+
+
+class InstitutionEditAddressView(InstitutionRequiredMixin, FormView):
+    template_name = 'institution_edit_address.html'
+    form_class = InstitutionEditAddressForm
+    success_url = reverse_lazy('institution_profile')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        self.institution = self.request.user.institution
+        kwargs['instance'] = self.institution
+        return kwargs
+
+    def form_valid(self, form: InstitutionEditAddressForm):
+        form.save()
+        messages.success(self.request, 'Endereço atualizado com sucesso!')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -141,15 +162,16 @@ class LegalRepresentativeEditView(InstitutionRequiredMixin, FormView):
     success_url = reverse_lazy('institution_profile')
 
     def get_form_kwargs(self):
-        form_kwargs = super().get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         self.institution = self.request.user.institution
-        self.representative = self.institution.representative
-        form_kwargs.update({'instance': self.representative})
-        return form_kwargs
+        kwargs['instance'] = self.institution.representative
+        return kwargs
 
     def form_valid(self, form: LegalRepresentativeForm):
-        form.save()
-        messages.success(self.request, 'Dados do responsável legal atualizados com sucesso!')
+        representative = form.save()
+        self.institution.representative = representative
+        self.institution.save()
+        messages.success(self.request, 'Responsável legal atualizado com sucesso!')
         return super().form_valid(form)
 
     def form_invalid(self, form):

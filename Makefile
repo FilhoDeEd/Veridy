@@ -23,10 +23,10 @@
 # 	docker compose -p veridy_staging -f docker-compose-staging.yml --env-file .secrets/staging.env down
 
 dev_build: Dockerfile docker-compose-dev.yml
-	docker compose -p veridy_dev -f docker-compose-dev.yml --env-file .secrets/development.env up --build -d
+	docker compose -p veridy_dev -f docker-compose-dev.yml --env-file .secrets/development.env up --build
 
 dev_up: Dockerfile docker-compose-dev.yml
-	docker compose -p veridy_dev -f docker-compose-dev.yml --env-file .secrets/development.env up -d
+	docker compose -p veridy_dev -f docker-compose-dev.yml --env-file .secrets/development.env up
 
 dev_down: Dockerfile docker-compose-dev.yml
 	docker compose -p veridy_dev -f docker-compose-dev.yml --env-file .secrets/development.env down

@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title_append %}
-Editar Instituição
+Editar Endereço
 {% endblock %}
 
 {% block breadcrumb %}
@@ -16,35 +16,18 @@ Editar Instituição
 	<a href="{% url 'institution_profile' %}" class="breadcrumb-link">Perfil Institucional</a>
 </li>
 <li class="breadcrumb-item">
-	<a href="{% url 'institution_edit' %}" class="breadcrumb-link" aria-current="page">Editar</a>
+	<a href="{% url 'institution_edit_address' %}" class="breadcrumb-link" aria-current="page">Editar Endereço</a>
 </li>
 {% endblock %}
 
 <!-- prettier-ignore -->
 {% block subtitle %}
-Editar os dados institucionais da organização
+Atualize o endereço da instituição
 {% endblock %}
 
 {% block content %}
 <form method="post">
 	{% csrf_token %}
-	<fieldset class="border rounded p-3 mb-4">
-		<legend>Dados da Instituição</legend>
-		<div class="row">
-			<div class="col-md-6">{{ form.name|as_crispy_field }}</div>
-			<div class="col-md-6">{{ form.tax_id|as_crispy_field }}</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6">{{ form.domain|as_crispy_field }}</div>
-		</div>
-	</fieldset>
-	<fieldset class="border rounded p-3 mb-4">
-		<legend>Informações de Contato</legend>
-		<div class="row">
-			<!-- <div class="col-md-6">form.email|as_crispy_field</div> -->
-			<div class="col-md-6">{{ form.phone|as_crispy_field }}</div>
-		</div>
-	</fieldset>
 	<fieldset class="border rounded p-3 mb-4">
 		<legend>Endereço</legend>
 		<div class="row">
