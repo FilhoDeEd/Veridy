@@ -1,0 +1,50 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+	<h1 class="text-2xl font-semibold mb-4">Verificação de Domínio</h1>
+
+	<div class="bg-gray-100 p-4 rounded shadow">
+		<p class="mb-2">
+			Para verificar o domínio <strong>{{ token.temporary_domain }}</strong>, é necessário adicionar um registro DNS do
+			tipo <code>TXT</code>.
+		</p>
+
+		<p class="mb-4">
+			Copie o valor abaixo e adicione-o como um registro <code>TXT</code> no domínio indicado. Esse token expira em
+			<strong>{{ token.expiration_date|date:"d/m/Y H:i" }}</strong>.
+		</p>
+
+		<div class="bg-white p-4 rounded border font-mono text-sm mb-4">veridy-domain-verification={{ token.token }}</div>
+
+		<form method="get" action="{% url 'institution_domain_verification:download_txt' token.pk %}">
+			<button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" type="submit">Baixar TXT</button>
+		</form>
+	</div>
+
+	<div class="mt-6">
+		<h2 class="text-xl font-semibold mb-2">Como prosseguir</h2>
+		<ol class="list-decimal list-inside space-y-2">
+			<li>Abra o painel de gerenciamento DNS do domínio <strong>{{ token.temporary_domain }}</strong>.</li>
+			<li>Adicione um novo registro do tipo <code>TXT</code>.</li>
+			<li>Na entrada <code>name/host</code>, utilize: <strong>@</strong> (ou deixe em branco, conforme o provedor).</li>
+			<li>No campo de valor, insira o conteúdo abaixo:</li>
+		</ol>
+
+		<div class="bg-white p-3 border mt-3 mb-3 rounded font-mono text-sm">
+			veridy-domain-verification={{ token.token }}
+		</div>
+
+		<p>Após adicionar o registro, aguarde alguns minutos e clique no botão abaixo para validar.</p>
+
+		<form method="post" action="{% url 'institution_domain_verification:verify_token' token.pk %}">
+			{% csrf_token %}
+			<button class="mt-4 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded" type="submit">
+				Verificar agora
+			</button>
+		</form>
+	</div>
+</div>
+{% endblock %}

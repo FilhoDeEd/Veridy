@@ -1,3 +1,6 @@
+import uuid
+from typing import TypeAlias
+from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
@@ -5,6 +8,36 @@ from django.utils.translation import gettext_lazy as _
 
 
 UserModel = get_user_model()
+
+
+Hour: TypeAlias = int
+
+
+VERIFICATION_TOKEN_EXPIRATION_TIME: Hour = 2
+
+
+class DomainVerificationToken(models.Model):
+    institution = models.OneToOneField('Institution', on_delete=models.CASCADE, related_name='verification_token')
+    token = models.CharField(max_length=255, unique=True, editable=False)
+
+    temporary_domain = models.CharField(max_length=255)
+
+    creation_date = models.DateTimeField(editable=False)
+    expiration_date = models.DateTimeField()
+
+    @property
+    def is_expired(self):
+        return timezone.now() > self.expiration_date
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.token = uuid.uuid4().hex
+            self.creation_date = timezone.now()
+            self.expiration_date = timezone.now() + timedelta(hours=VERIFICATION_TOKEN_EXPIRATION_TIME)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.token
 
 
 class LegalRepresentative(models.Model):
@@ -83,6 +116,22 @@ class Institution(models.Model):
     def is_active(self):
         return self.user.is_active
 
+    @property
+    def is_verified(self):
+        return self.status == Institution.Status.VERIFIED
+
+    def verify(self, verified_domain: str):
+        self.domain = verified_domain.strip().lower()
+        self.domain_verified = True
+        self.domain_verification_date = timezone.now()
+        self.status = self.Status.VERIFIED
+
+    def unverify(self):
+        self.domain = None
+        self.domain_verified = False
+        self.domain_verification_date = None
+        self.status = self.Status.PENDING if self.is_profile_complete else self.Status.INCOMPLETE
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.creation_date = timezone.now()
@@ -94,7 +143,7 @@ class Institution(models.Model):
             else:
                 self.status = self.Status.INCOMPLETE
 
-        return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.user.username

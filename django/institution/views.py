@@ -10,13 +10,14 @@ from django.views.generic import DetailView, FormView, TemplateView
 from django_filters.views import FilterView
 
 from institution.forms import (
+    DomainInputForm,
     InstitutionEditAddressForm,
     InstitutionEditBasicForm,
     InstitutionRegistrationForm,
     LegalRepresentativeForm
 )
 from institution.mixins import InstitutionRequiredMixin
-from institution.models import Institution, LegalRepresentative
+from institution.models import DomainVerificationToken, Institution, LegalRepresentative
 from institution.filters import InstitutionFilter
 
 
@@ -177,3 +178,117 @@ class LegalRepresentativeEditView(InstitutionRequiredMixin, FormView):
     def form_invalid(self, form):
         messages.error(self.request, 'Por favor, corrija os erros abaixo.')
         return super().form_invalid(form)
+
+
+class DomainVerificationRequestView(InstitutionRequiredMixin, FormView):
+    template_name = 'institution_domain_verification/request.html'
+    form_class = DomainInputForm
+    success_url = reverse_lazy('home')  # Mudar depois
+
+    def dispatch(self, request, *args, **kwargs):
+        self.institution: Institution = request.user.institution
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        if self.institution.is_verified:
+            messages.warning(
+                request,
+                'Esta instituição já está verificada. Ao iniciar um novo processo de verificação, '
+                'o status da instituição voltará para pendente até que a verificação seja concluída. '
+                'Certifique-se de que essa alteração é necessária.'
+            )
+
+        return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form: DomainInputForm):
+        try:
+            self.domain = self.institution.domain
+            unverified_domain = form.cleaned_data['domain'].strip().lower()
+
+            if self.institution.is_verified and unverified_domain == self.domain:
+                form.add_error('domain', 'O novo domínio deve ser diferente do domínio atual já verificado.')
+                return self.form_invalid(form)
+
+            with transaction.atomic():
+                self.institution.unverify()
+                self.institution.save()
+
+                DomainVerificationToken.objects.filter(institution=self.institution).delete()
+
+                token = DomainVerificationToken.objects.create(
+                    temporary_domain=unverified_domain,
+                    institution=self.institution
+                )
+                token.save()
+
+                messages.success(self.request, 'Token de verificação gerado com sucesso! Prossiga com a validação.')
+        except Exception as e:
+            print(e)
+            messages.error(self.request, 'Erro ao gerar token de verificação. Por favor, tente novamente.')
+            return self.form_invalid(form)
+
+        return super().form_valid(form)
+
+
+# class DomainVerificationView(InstitutionRequiredMixin, FormView):
+#     template_name = 'institution_verify.html'
+#     form_class = DomainForm
+#     success_url = reverse_lazy('institution_profile')
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         institution = self.request.user.institution
+
+#         token, _ = DomainVerificationToken.objects.get_or_create(institution=institution)
+#         if token.is_expired():
+#             token.delete()
+#             token = DomainVerificationToken.objects.create(institution=institution)
+
+#         context['token'] = token.token
+#         context['expires_at'] = token.expiration_date
+#         return context
+
+#     def form_valid(self, form: DomainForm):
+#         data = form.cleaned_data
+#         institution: Institution = self.request.user.institution
+
+#         try:
+#             with transaction.atomic():
+#                 token, _ = DomainVerificationToken.objects.get_or_create(institution=institution)
+#                 if token.is_expired():
+#                     token.delete()
+#                     token = DomainVerificationToken.objects.create(institution=institution)
+#                 institution.domain = data['domain']
+#         except Exception:
+#             messages.error(self.request, 'Erro ao gerar token de verificação. Por favor, tente novamente.')
+#             return self.form_invalid(form)
+
+#         return super().form_valid(form)
+
+#     def form_invalid(self, form):
+#         return super().form_invalid(form)
+
+#     def post(self, request, *args, **kwargs):
+#         institution = self.request.user.institution
+#         token_obj = getattr(institution, 'verification_token', None)
+
+#         if not token_obj or token_obj.is_expired():
+#             messages.error(request, "O token expirou. Um novo token será gerado.")
+#             return redirect('institution_start_verification')
+
+#         try:
+#             answers = dns.resolver.resolve(institution.domain, 'TXT')
+#             for rdata in answers:
+#                 if token_obj.token in str(rdata):
+#                     institution.domain_verified = True
+#                     institution.domain_verification_date = timezone.now()
+#                     institution.status = institution.Status.VERIFIED
+#                     institution.save()
+#                     token_obj.delete()
+#                     messages.success(request, "Domínio verificado com sucesso!")
+#                     return redirect('institution_profile')
+#             messages.error(request, "Token não encontrado nos registros DNS. Verifique e tente novamente.")
+#         except Exception as e:
+#             messages.error(request, f"Erro ao consultar DNS: {e}")
+
+#         return redirect('institution_start_verification')

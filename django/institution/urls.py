@@ -6,7 +6,8 @@ from institution.views import (
     InstitutionEditBasicView,
     InstitutionEditAddressView,
     InstitutionDetailView,
-    LegalRepresentativeEditView
+    LegalRepresentativeEditView,
+    DomainVerificationRequestView
 )
 
 
@@ -21,5 +22,8 @@ urlpatterns = [
     path('detail/<int:institution_id>/', InstitutionDetailView.as_view(), name='institution_detail'),
     path('representative/', include([
         path('edit/', LegalRepresentativeEditView.as_view(), name='legal_representative_edit')
-    ]))
+    ])),
+    path('domain-verification/', include([
+        path('request/', DomainVerificationRequestView.as_view(), name='domain_verification_request')
+    ])),
 ]

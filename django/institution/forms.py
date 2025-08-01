@@ -157,3 +157,12 @@ class LegalRepresentativeForm(forms.ModelForm):
             'email',
             'phone'
         ]
+
+
+class DomainInputForm(forms.Form):
+    domain = forms.CharField(
+        label='Domínio Institucional',
+        widget=forms.TextInput(
+            attrs={'placeholder': 'e.g. exemplo.edu.br'}
+        )
+    )
