@@ -1,0 +1,77 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load tz %}
+
+{% block title_append %}
+Verificar Domínio
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'institution_profile' %}" class="breadcrumb-link">Perfil Institucional</a>
+</li>
+<li class="breadcrumb-item active" aria-current="page">Verificação de Domínio</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Finalizar Verificação de Domínio
+{% endblock %}
+
+{% block content %}
+<div class="card">
+	<div class="card-body">
+		<h5 class="card-title mb-3">Informações do Token</h5>
+
+		<div class="alert alert-info">
+			<p>
+				Para concluir a verificação, você precisa adicionar o token abaixo como um registro <code>TXT</code> no serviço de
+				DNS do domínio informado.
+			</p>
+			<p>
+				Depois de adicionar o token, clique no botão <strong>"Verificar agora"</strong> para confirmar a propriedade do
+				domínio.
+			</p>
+		</div>
+
+		<dl class="row">
+			<dt class="col-sm-3">Domínio informado</dt>
+			<dd class="col-sm-9"><code>{{ token.temporary_domain }}</code></dd>
+
+			<dt class="col-sm-3">Token de verificação</dt>
+			<dd class="col-sm-9"><code>{{ token.token }}</code></dd>
+
+			<dt class="col-sm-3">Expiração</dt>
+			<dd class="col-sm-9">{{ token.expiration_date|localtime|date:"d \d\e F \d\e Y, H:i" }}</dd>
+		</dl>
+
+		<hr />
+
+		<h6 class="mb-3">Como adicionar no DNS</h6>
+		<p>Adicione o seguinte registro no seu painel de DNS:</p>
+
+		<pre class="bg-light p-3 rounded border">
+			Tipo: TXT
+			Nome: @
+			Valor: {{ token.token }}
+   		</pre
+		>
+		<p class="text-muted mb-4">
+			Algumas plataformas podem exigir que o nome do registro seja o domínio completo (ex:
+			<code>{{ token.temporary_domain }}</code>) ou apenas "@". Consulte a documentação do seu provedor de DNS.
+		</p>
+
+		<div class="d-flex justify-content-end gap-2 mt-4">
+			<a href="{% url 'verification_download_token' %}" class="btn btn-outline-primary">
+				<i class="fas fa-download"></i> Baixar TXT
+			</a>
+			<a href="#" class="btn btn-success"> <i class="fas fa-check-circle"></i> Verificar agora </a>
+		</div>
+	</div>
+</div>
+{% endblock %}

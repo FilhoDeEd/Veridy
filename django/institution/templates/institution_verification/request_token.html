@@ -1,0 +1,45 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title_append %}Solicitar Verificação de Domínio{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+	<a href="{% url 'home' %}" class="breadcrumb-link"><i class="fas fa-home"></i></a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'institution_profile' %}" class="breadcrumb-link">Perfil Institucional</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'verification_request_token' %}" class="breadcrumb-link" aria-current="page">Verificação de Domínio</a>
+</li>
+<li class="breadcrumb-item active" aria-current="page">Verificação de Domínio</li>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block subtitle %}
+Solicitação de Verificação de Domínio Institucional
+{% endblock %}
+
+{% block content %}
+<div class="card">
+	<div class="card-body">
+		{% include 'institution_verification/explain.html' %}
+
+		<hr class="my-4" />
+
+		<h5 class="mb-3">Informe o domínio para iniciar a verificação</h5>
+		<form method="post" novalidate>
+			<!-- prettier-ignore -->
+			{% csrf_token %}
+			{{ form|crispy }}
+
+			<div class="d-flex justify-content-end gap-2 mt-3">
+				<button type="submit" class="btn btn-success px-4">Gerar Token</button>
+				<a href="{% url 'institution_profile' %}" class="btn btn-outline-secondary">Cancelar</a>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

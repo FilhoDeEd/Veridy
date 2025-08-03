@@ -3,9 +3,9 @@ from common.models import UserTypeChoices
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login
 from django.db import transaction
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, FormView, TemplateView
+from django.views.generic import DetailView, FormView, TemplateView, View
 
 from django_filters.views import FilterView
 
@@ -180,10 +180,10 @@ class LegalRepresentativeEditView(InstitutionRequiredMixin, FormView):
         return super().form_invalid(form)
 
 
-class DomainVerificationRequestView(InstitutionRequiredMixin, FormView):
-    template_name = 'institution_domain_verification/request.html'
+class InstitutionVerificationRequestTokenView(InstitutionRequiredMixin, FormView):
+    template_name = 'institution_verification/request_token.html'
     form_class = DomainInputForm
-    success_url = reverse_lazy('home')  # Mudar depois
+    success_url = reverse_lazy('verification_display_token')
 
     def dispatch(self, request, *args, **kwargs):
         self.institution: Institution = request.user.institution
@@ -222,13 +222,39 @@ class DomainVerificationRequestView(InstitutionRequiredMixin, FormView):
                 token.save()
 
                 messages.success(self.request, 'Token de verificação gerado com sucesso! Prossiga com a validação.')
-        except Exception as e:
-            print(e)
+        except Exception:
             messages.error(self.request, 'Erro ao gerar token de verificação. Por favor, tente novamente.')
             return self.form_invalid(form)
 
         return super().form_valid(form)
 
+
+class InstitutionVerificationDisplayTokenView(InstitutionRequiredMixin, DetailView):
+    model = DomainVerificationToken
+    template_name = 'institution_verification/display_token.html'
+    context_object_name = 'token'
+
+    def get_object(self, queryset=None):
+        institution = self.request.user.institution
+        try:
+            return DomainVerificationToken.objects.get(institution=institution)
+        except DomainVerificationToken.DoesNotExist:
+            raise Http404('Nenhum token de verificação encontrado.')
+
+
+class InstitutionVerificationDownloadTokenView(InstitutionRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        institution = self.request.user.institution
+
+        try:
+            token = DomainVerificationToken.objects.get(institution=institution)
+        except DomainVerificationToken.DoesNotExist:
+            raise Http404('Token de verificação não encontrado.')
+
+        content = token.token
+        response = HttpResponse(content, content_type='text/plain')
+        response['Content-Disposition'] = f'attachment; filename=verificacao_{institution.id}.txt'
+        return response
 
 # class DomainVerificationView(InstitutionRequiredMixin, FormView):
 #     template_name = 'institution_verify.html'

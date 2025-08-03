@@ -6,8 +6,11 @@ from institution.views import (
     InstitutionEditBasicView,
     InstitutionEditAddressView,
     InstitutionDetailView,
-    LegalRepresentativeEditView,
-    DomainVerificationRequestView
+    InstitutionVerificationRequestTokenView,
+    InstitutionVerificationDisplayTokenView,
+    InstitutionVerificationDownloadTokenView,
+    # DomainVerificationDownloadTokenView,
+    LegalRepresentativeEditView
 )
 
 
@@ -23,7 +26,10 @@ urlpatterns = [
     path('representative/', include([
         path('edit/', LegalRepresentativeEditView.as_view(), name='legal_representative_edit')
     ])),
-    path('domain-verification/', include([
-        path('request/', DomainVerificationRequestView.as_view(), name='domain_verification_request')
+    path('verification/', include([
+        path('request-token/', InstitutionVerificationRequestTokenView.as_view(), name='verification_request_token'),
+        path('display-token/', InstitutionVerificationDisplayTokenView.as_view(), name='verification_display_token'),
+        path('download-token/', InstitutionVerificationDownloadTokenView.as_view(), name='verification_download_token'),
+        # path('check/', DomainVerificationCheckView.as_view(), name='domain_verification_check'),
     ])),
 ]
