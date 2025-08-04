@@ -48,7 +48,7 @@ Finalizar Verificação de Domínio
 			</div>
 			<div class="col-md-12">
 				<label class="form-label fw-semibold">Token de Verificação (valor do registro TXT)</label>
-				<div class="form-control border"><code>{{ token.token }}</code></div>
+				<div class="form-control border"><code>veridy-domain-verification={{ token.token }}</code></div>
 			</div>
 		</div>
 
@@ -58,10 +58,13 @@ Finalizar Verificação de Domínio
 		</p>
 
 		<div class="d-flex justify-content-end gap-2">
+			<a href="{% url 'verification_request_token' %}" class="btn btn-outline-warning shadow-sm">
+				<span class="fw-semibold"><i class="fas fa-redo-alt"></i> Gerar Novo Token</span>
+			</a>
 			<a href="{% url 'verification_download_token' %}" class="btn btn-outline-primary shadow-sm">
 				<span class="fw-semibold"><i class="fas fa-download"></i> Baixar TXT</span>
 			</a>
-			<a href="#" class="btn btn-outline-success shadow-sm">
+			<a href="{% url 'verification_check_token' %}" class="btn btn-outline-success shadow-sm">
 				<span class="fw-semibold"><i class="fas fa-check-circle"></i> Verificar Agora</span>
 			</a>
 		</div>

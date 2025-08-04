@@ -9,7 +9,7 @@ from institution.views import (
     InstitutionVerificationRequestTokenView,
     InstitutionVerificationDisplayTokenView,
     InstitutionVerificationDownloadTokenView,
-    # DomainVerificationDownloadTokenView,
+    InstitutionVerificationCheckTokenView,
     LegalRepresentativeEditView
 )
 
@@ -30,6 +30,6 @@ urlpatterns = [
         path('request-token/', InstitutionVerificationRequestTokenView.as_view(), name='verification_request_token'),
         path('display-token/', InstitutionVerificationDisplayTokenView.as_view(), name='verification_display_token'),
         path('download-token/', InstitutionVerificationDownloadTokenView.as_view(), name='verification_download_token'),
-        # path('check/', DomainVerificationCheckView.as_view(), name='domain_verification_check'),
-    ])),
+        path('check-token/', InstitutionVerificationCheckTokenView.as_view(), name='verification_check_token')
+    ]))
 ]

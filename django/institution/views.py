@@ -1,3 +1,5 @@
+import dns.resolver
+
 from common.models import UserTypeChoices
 
 from django.contrib import messages
@@ -259,8 +261,65 @@ class InstitutionVerificationDownloadTokenView(InstitutionRequiredMixin, View):
         except DomainVerificationToken.DoesNotExist:
             raise Http404('Token de verificação não encontrado.')
 
-        content = f'veridy-domain-verification={token.token}'
+        content = token.dns_verification_txt()
         response = HttpResponse(content, content_type='text/plain')
         response['Content-Disposition'] = f'attachment; filename=verificacao_{institution.id}.txt'
         return response
 
+
+class InstitutionVerificationCheckTokenView(InstitutionRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        institution: Institution = self.request.user.institution
+
+        try:
+            token = DomainVerificationToken.objects.get(institution=institution)
+        except DomainVerificationToken.DoesNotExist:
+            raise Http404('Token de verificação não encontrado.')
+
+        if token.is_expired:
+            messages.error(
+                request,
+                'O token de verificação expirou. Gere um novo token para continuar o processo.'
+            )
+            return HttpResponseRedirect(reverse_lazy('verification_display_token'))
+
+        domain = token.temporary_domain
+        expected_txt = token.dns_verification_txt()
+
+        try:
+            answers = dns.resolver.query(domain, 'TXT')
+
+            for rdata in answers:
+                for txt_string in rdata.strings:
+                    if expected_txt == txt_string.decode():
+                        with transaction.atomic():
+                            institution.verify(domain, expected_txt)
+                            institution.save()
+
+                            messages.success(request, 'Domínio verificado com sucesso!')
+
+                        return HttpResponseRedirect(reverse_lazy('institution_profile'))
+
+            messages.warning(
+                request,
+                'Nenhum registro TXT corresponde ao token de verificação. Certifique-se '
+                'de que o token foi corretamente adicionado ao DNS do domínio informado '
+                'e aguarde alguns minutos antes de tentar novamente.'
+            )
+        except dns.resolver.NXDOMAIN:
+            messages.error(
+                request,
+                'Não foi possível localizar o domínio informado. Certifique-se de que o nome está '
+                'correto e tente novamente.'
+            )
+        except dns.resolver.NoAnswer:
+            messages.warning(
+                request,
+                'Nenhum registro TXT foi encontrado. Certifique-se de que o token '
+                'foi corretamente adicionado ao DNS do domínio informado e aguarde '
+                'alguns minutos antes de tentar novamente.'
+            )
+        except Exception:
+            messages.error(request, 'Erro ao verificar domínio. Tente novamente mais tarde.')
+
+        return HttpResponseRedirect(reverse_lazy('verification_display_token'))

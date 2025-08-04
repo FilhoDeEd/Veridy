@@ -1,5 +1,8 @@
 # ✅ TODO - Veridy Platform
 
+- [ ] Descida o que irá fazer com o Token após a verificação (se irá deletar ou salvar o objeto, deixando o token permanente)
+- [ ] Revise as classes do processo de verificação, há bastante detalhe, veja se n passou nada.
+
 ## 🏛️ Instituição
 
 - [x] Página de cadastro
@@ -7,11 +10,10 @@
   - [x] Página de edição dos dados
 - [x] Página para listar Instituições
 - [x] Página pública para detalhar uma instituição específica
-- [ ] Página de verificação
-  - [ ] Instruções para rodar o servidor de verificação
-  - [ ] Botão para iniciar verificação
-  - [ ] Status atual da verificação
-  - [ ] Histórico de tentativas de verificação
+- [x] Página de verificação
+  - [x] Instruções para rodar o servidor de verificação
+  - [x] Botão para iniciar verificação
+  - [x] Status atual da verificação
 - [x] Formulário de emissão
 - [ ] Página de diplomas emitidos
   - [x] Listagem com busca/filtro

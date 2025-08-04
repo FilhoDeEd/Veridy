@@ -29,6 +29,9 @@ class DomainVerificationToken(models.Model):
     def is_expired(self):
         return timezone.now() > self.expiration_date
 
+    def dns_verification_txt(self):
+        return f'veridy-domain-verification={self.token}'
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.token = uuid.uuid4().hex
@@ -82,6 +85,7 @@ class Institution(models.Model):
 
     domain = models.CharField(max_length=255, null=True, blank=True)
     domain_verified = models.BooleanField(default=False)
+    verification_token = models.CharField(max_length=255, null=True, blank=True)
     domain_verification_date = models.DateTimeField(null=True, blank=True)
 
     status = models.CharField(
@@ -120,16 +124,18 @@ class Institution(models.Model):
     def is_verified(self):
         return self.status == Institution.Status.VERIFIED
 
-    def verify(self, verified_domain: str):
+    def verify(self, verified_domain: str, token: str):
         self.domain = verified_domain.strip().lower()
         self.domain_verified = True
         self.domain_verification_date = timezone.now()
+        self.verification_token = token
         self.status = self.Status.VERIFIED
 
     def unverify(self):
         self.domain = None
         self.domain_verified = False
         self.domain_verification_date = None
+        self.verification_token = None
         self.status = self.Status.PENDING if self.is_profile_complete else self.Status.INCOMPLETE
 
     def save(self, *args, **kwargs):
