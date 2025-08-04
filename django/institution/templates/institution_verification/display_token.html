@@ -15,7 +15,9 @@ Verificar Domínio
 <li class="breadcrumb-item">
 	<a href="{% url 'institution_profile' %}" class="breadcrumb-link">Perfil Institucional</a>
 </li>
-<li class="breadcrumb-item active" aria-current="page">Verificação de Domínio</li>
+<li class="breadcrumb-item">
+	<a href="{% url 'verification_display_token' %}" class="breadcrumb-link" aria-current="page">Verificação de Domínio</a>
+</li>
 {% endblock %}
 
 <!-- prettier-ignore -->
@@ -24,53 +26,44 @@ Finalizar Verificação de Domínio
 {% endblock %}
 
 {% block content %}
-<div class="card">
-	<div class="card-body">
-		<h5 class="card-title mb-3">Informações do Token</h5>
+<div class="alert alert-primary shadow-sm mb-4">
+	<h5 class="mb-2">Como concluir a verificação?</h5>
+	<p class="mb-1">Adicione o token abaixo como um registro <code>TXT</code> no painel DNS do domínio informado.</p>
+	<p class="mb-0">Depois, clique no botão <strong>“Verificar agora”</strong> para confirmarmos a propriedade.</p>
+</div>
 
-		<div class="alert alert-info">
-			<p>
-				Para concluir a verificação, você precisa adicionar o token abaixo como um registro <code>TXT</code> no serviço de
-				DNS do domínio informado.
-			</p>
-			<p>
-				Depois de adicionar o token, clique no botão <strong>"Verificar agora"</strong> para confirmar a propriedade do
-				domínio.
-			</p>
+<div class="card shadow-sm">
+	<div class="bg-primary py-2 rounded-top"></div>
+	<div class="card-body">
+		<div class="row mb-4">
+			<div class="col-md-6 mb-3">
+				<label class="form-label fw-semibold">Domínio informado</label>
+				<div class="form-control border"><code>{{ token.temporary_domain }}</code></div>
+			</div>
+			<div class="col-md-6 mb-3">
+				<label class="form-label fw-semibold">Expira em</label>
+				<div class="form-control border">
+					<code>{{ token.expiration_date|localtime|date:"d \d\e F \d\e Y, H:i" }}</code>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<label class="form-label fw-semibold">Token de Verificação (valor do registro TXT)</label>
+				<div class="form-control border"><code>{{ token.token }}</code></div>
+			</div>
 		</div>
 
-		<dl class="row">
-			<dt class="col-sm-3">Domínio informado</dt>
-			<dd class="col-sm-9"><code>{{ token.temporary_domain }}</code></dd>
-
-			<dt class="col-sm-3">Token de verificação</dt>
-			<dd class="col-sm-9"><code>{{ token.token }}</code></dd>
-
-			<dt class="col-sm-3">Expiração</dt>
-			<dd class="col-sm-9">{{ token.expiration_date|localtime|date:"d \d\e F \d\e Y, H:i" }}</dd>
-		</dl>
-
-		<hr />
-
-		<h6 class="mb-3">Como adicionar no DNS</h6>
-		<p>Adicione o seguinte registro no seu painel de DNS:</p>
-
-		<pre class="bg-light p-3 rounded border">
-			Tipo: TXT
-			Nome: @
-			Valor: {{ token.token }}
-   		</pre
-		>
-		<p class="text-muted mb-4">
-			Algumas plataformas podem exigir que o nome do registro seja o domínio completo (ex:
-			<code>{{ token.temporary_domain }}</code>) ou apenas "@". Consulte a documentação do seu provedor de DNS.
+		<p class="text-muted small mb-4">
+			Algumas plataformas pedem o domínio completo no campo “Nome” do registro (ex:
+			<code>{{ token.temporary_domain }}</code>), outras apenas “@”. Consulte a documentação do seu provedor de DNS.
 		</p>
 
-		<div class="d-flex justify-content-end gap-2 mt-4">
-			<a href="{% url 'verification_download_token' %}" class="btn btn-outline-primary">
-				<i class="fas fa-download"></i> Baixar TXT
+		<div class="d-flex justify-content-end gap-2">
+			<a href="{% url 'verification_download_token' %}" class="btn btn-outline-primary shadow-sm">
+				<span class="fw-semibold"><i class="fas fa-download"></i> Baixar TXT</span>
 			</a>
-			<a href="#" class="btn btn-success"> <i class="fas fa-check-circle"></i> Verificar agora </a>
+			<a href="#" class="btn btn-outline-success shadow-sm">
+				<span class="fw-semibold"><i class="fas fa-check-circle"></i> Verificar Agora</span>
+			</a>
 		</div>
 	</div>
 </div>

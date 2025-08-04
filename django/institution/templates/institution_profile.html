@@ -32,7 +32,7 @@ Perfil da instituição
 	</div>
 </div>
 {% elif institution.status == 'P' %}
-<div class="alert alert-info d-flex align-items-center gap-2 justify-content-between flex-wrap mb-4" role="alert">
+<div class="alert alert-primary d-flex align-items-center gap-2 justify-content-between flex-wrap mb-3" role="alert">
 	<div class="d-flex align-items-center gap-2">
 		<i class="fas fa-info-circle fa-lg"></i>
 		<div>
@@ -40,9 +40,15 @@ Perfil da instituição
 			Adicione um registro <code>TXT</code> no domínio institucional para confirmar a propriedade.
 		</div>
 	</div>
-	<a href="{% url 'verification_request_token' %}" class="btn btn-primary btn-sm mt-2 mt-md-0 theme-inverse">
-		Iniciar Verificação
+	{% if has_active_token %}
+	<a href="{% url 'verification_display_token' %}" class="btn btn-primary btn-sm mt-2 mt-md-0 theme-inverse">
+		<span class="fw-semibold">Continuar Verificação</span>
 	</a>
+	{% else %}
+	<a href="{% url 'verification_request_token' %}" class="btn btn-primary btn-sm mt-2 mt-md-0 theme-inverse">
+		<span class="fw-semibold">Iniciar Verificação</span>
+	</a>
+	{% endif %}
 </div>
 {% elif institution.status == 'V' %}
 <div class="alert alert-success d-flex align-items-center gap-2 mb-4" role="alert">

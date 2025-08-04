@@ -2,11 +2,15 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title_append %}Solicitar Verificação de Domínio{% endblock %}
+{% block title_append %}
+Solicitar Verificação de Domínio
+{% endblock %}
 
 {% block breadcrumb %}
 <li class="breadcrumb-item">
-	<a href="{% url 'home' %}" class="breadcrumb-link"><i class="fas fa-home"></i></a>
+	<a href="{% url 'home' %}" class="breadcrumb-link">
+		<i class="fas fa-home"></i>
+	</a>
 </li>
 <li class="breadcrumb-item">
 	<a href="{% url 'institution_profile' %}" class="breadcrumb-link">Perfil Institucional</a>
@@ -14,7 +18,6 @@
 <li class="breadcrumb-item">
 	<a href="{% url 'verification_request_token' %}" class="breadcrumb-link" aria-current="page">Verificação de Domínio</a>
 </li>
-<li class="breadcrumb-item active" aria-current="page">Verificação de Domínio</li>
 {% endblock %}
 
 <!-- prettier-ignore -->
@@ -23,23 +26,37 @@ Solicitação de Verificação de Domínio Institucional
 {% endblock %}
 
 {% block content %}
-<div class="card">
-	<div class="card-body">
-		{% include 'institution_verification/explain.html' %}
-
-		<hr class="my-4" />
-
-		<h5 class="mb-3">Informe o domínio para iniciar a verificação</h5>
-		<form method="post" novalidate>
-			<!-- prettier-ignore -->
-			{% csrf_token %}
-			{{ form|crispy }}
-
-			<div class="d-flex justify-content-end gap-2 mt-3">
-				<button type="submit" class="btn btn-success px-4">Gerar Token</button>
-				<a href="{% url 'institution_profile' %}" class="btn btn-outline-secondary">Cancelar</a>
-			</div>
-		</form>
-	</div>
+<div class="alert alert-primary shadow-sm mb-4">
+	<h5 class="mb-2">Por que verificar seu domínio?</h5>
+	<p class="mb-1">
+		A Veridy utiliza o domínio das instituições como forma de validar a autenticidade de certificados e documentos
+		digitais. Para garantir essa associação com segurança, é necessário comprovar que sua instituição tem controle sobre o
+		domínio informado.
+	</p>
+	<p class="mb-0">
+		Após informar o domínio abaixo, um token exclusivo será gerado. Esse token deverá ser adicionado como um registro
+		<code>TXT</code> no painel DNS do domínio. Essa configuração pode ser feita por um responsável técnico e será
+		detalhada na próxima etapa.
+	</p>
 </div>
+<form method="post">
+	{% csrf_token %}
+	<div class="shadow-sm">
+		<div class="bg-primary py-2 rounded-top"></div>
+		<fieldset class="border rounded-bottom p-3 mb-3">
+			<legend>Informe o Domínio da Instituição</legend>
+			<div class="row">
+				<div class="col-md-12">{{ form.domain|as_crispy_field }}</div>
+			</div>
+		</fieldset>
+	</div>
+	<div class="d-flex justify-content-end gap-2">
+		<button type="submit" class="btn btn-outline-success shadow-sm px-4">
+			<span class="fw-semibold">Continuar</span>
+		</button>
+		<a href="{% url 'institution_profile' %}" class="btn btn-outline-primary shadow-sm">
+			<span class="fw-semibold">Cancelar</span>
+		</a>
+	</div>
+</form>
 {% endblock %}

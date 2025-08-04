@@ -98,7 +98,15 @@ class InstitutionProfileView(InstitutionRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        context['institution'] = self.request.user.institution
+        institution = self.request.user.institution
+        context['institution'] = institution
+
+        try:
+            token = DomainVerificationToken.objects.get(institution=institution)
+            context['has_active_token'] = not token.is_expired
+        except DomainVerificationToken.DoesNotExist:
+            context['has_active_token'] = False
+
         return self.render_to_response(context)
 
 
@@ -251,70 +259,8 @@ class InstitutionVerificationDownloadTokenView(InstitutionRequiredMixin, View):
         except DomainVerificationToken.DoesNotExist:
             raise Http404('Token de verificação não encontrado.')
 
-        content = token.token
+        content = f'veridy-domain-verification={token.token}'
         response = HttpResponse(content, content_type='text/plain')
         response['Content-Disposition'] = f'attachment; filename=verificacao_{institution.id}.txt'
         return response
 
-# class DomainVerificationView(InstitutionRequiredMixin, FormView):
-#     template_name = 'institution_verify.html'
-#     form_class = DomainForm
-#     success_url = reverse_lazy('institution_profile')
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         institution = self.request.user.institution
-
-#         token, _ = DomainVerificationToken.objects.get_or_create(institution=institution)
-#         if token.is_expired():
-#             token.delete()
-#             token = DomainVerificationToken.objects.create(institution=institution)
-
-#         context['token'] = token.token
-#         context['expires_at'] = token.expiration_date
-#         return context
-
-#     def form_valid(self, form: DomainForm):
-#         data = form.cleaned_data
-#         institution: Institution = self.request.user.institution
-
-#         try:
-#             with transaction.atomic():
-#                 token, _ = DomainVerificationToken.objects.get_or_create(institution=institution)
-#                 if token.is_expired():
-#                     token.delete()
-#                     token = DomainVerificationToken.objects.create(institution=institution)
-#                 institution.domain = data['domain']
-#         except Exception:
-#             messages.error(self.request, 'Erro ao gerar token de verificação. Por favor, tente novamente.')
-#             return self.form_invalid(form)
-
-#         return super().form_valid(form)
-
-#     def form_invalid(self, form):
-#         return super().form_invalid(form)
-
-#     def post(self, request, *args, **kwargs):
-#         institution = self.request.user.institution
-#         token_obj = getattr(institution, 'verification_token', None)
-
-#         if not token_obj or token_obj.is_expired():
-#             messages.error(request, "O token expirou. Um novo token será gerado.")
-#             return redirect('institution_start_verification')
-
-#         try:
-#             answers = dns.resolver.resolve(institution.domain, 'TXT')
-#             for rdata in answers:
-#                 if token_obj.token in str(rdata):
-#                     institution.domain_verified = True
-#                     institution.domain_verification_date = timezone.now()
-#                     institution.status = institution.Status.VERIFIED
-#                     institution.save()
-#                     token_obj.delete()
-#                     messages.success(request, "Domínio verificado com sucesso!")
-#                     return redirect('institution_profile')
-#             messages.error(request, "Token não encontrado nos registros DNS. Verifique e tente novamente.")
-#         except Exception as e:
-#             messages.error(request, f"Erro ao consultar DNS: {e}")
-
-#         return redirect('institution_start_verification')
