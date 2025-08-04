@@ -293,7 +293,7 @@ class InstitutionVerificationCheckTokenView(InstitutionRequiredMixin, View):
                 for txt_string in rdata.strings:
                     if expected_txt == txt_string.decode():
                         with transaction.atomic():
-                            institution.verify(domain, expected_txt)
+                            institution.verify(domain)
                             institution.save()
 
                             messages.success(request, 'Domínio verificado com sucesso!')
