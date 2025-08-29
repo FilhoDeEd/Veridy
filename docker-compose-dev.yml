@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -25,16 +25,16 @@ services:
     environment:
       ENVIRONMENT: development
       SECRET_KEY: ${DJANGO_SECRET_KEY}
-      ADMIN_USERS:  /run/secrets/admin_users
+      ADMIN_USERS: /run/secrets/admin_users
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
     secrets:
-       - admin_users
+      - admin_users
     volumes:
-      - ./django:/app/django
+      - ./django_server:/app/django_server
       - media_volume:/media
     ports:
       - "${DJANGO_PORT}:8000"
@@ -57,5 +57,5 @@ networks:
     driver: bridge
 
 secrets:
-   admin_users:
-     file: .secrets/admin_users.json
+  admin_users:
+    file: .secrets/admin_users.json
