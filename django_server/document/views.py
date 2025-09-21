@@ -46,7 +46,7 @@ class DocumentUploadView(InstitutionRequiredMixin, FormView):
                     institution=institution
                 )
 
-                client = ipfshttpclient.connect()
+                client = ipfshttpclient.connect('/dns/kubo/tcp/5001/http')
                 res = client.add(document.file.path)
                 ipfs_cid = res['Hash']
 

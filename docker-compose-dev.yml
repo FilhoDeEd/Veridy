@@ -18,6 +18,25 @@ services:
     networks:
       - compose_network
 
+  kubo:
+    image: ipfs/kubo:v0.35.0
+    container_name: veridy_dev_kubo
+    environment:
+      IPFS_PROFILE: "server"
+    command:
+      - daemon
+      - --migrate=true
+      - --enable-gc=true
+      - --enable-pubsub-experiment
+    volumes:
+      - ipfs_data:/data/ipfs
+    ports:
+      - "4001:4001"
+      - "5001:5001"
+      - "8080:8080"
+    networks:
+      - compose_network
+
   django:
     build: .
     image: django_image
@@ -42,10 +61,14 @@ services:
       - compose_network
     depends_on:
       - db
+      - kubo
 
 volumes:
   db_data:
     name: veridy_dev_db_data
+    driver: local
+  ipfs_data:
+    name: veridy_dev_ipfs_data
     driver: local
   media_volume:
     name: veridy_dev_media_volume

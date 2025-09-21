@@ -33,7 +33,7 @@ Visualização do Documento
 		<p><strong>Arquivo:</strong> {{ document }}</p>
 		<p>
 			<strong>IPFS:</strong>
-			<a href="https://ipfs.io/ipfs/{{ document.ipfs_cid }}" target="_blank" rel="noopener noreferrer">
+			<a href="http://localhost:8080/ipfs/{{ document.ipfs_cid }}" target="_blank" rel="noopener noreferrer">
 				{{ document.ipfs_cid }}
 			</a>
 		</p>
@@ -64,7 +64,7 @@ Visualização do Documento
 <script>
 	const ipfsCid = `{{ document.ipfs_cid|default_if_none:"" }}`;
 	const localUrl = `{{ document.file.url }}`;
-	const url = ipfsCid ? `https://ipfs.io/ipfs/${ipfsCid}` : localUrl;
+	const url = ipfsCid ? `http://localhost:8080/ipfs/${ipfsCid}` : localUrl;
 
 	const pdfjsLib = window['pdfjs-dist/build/pdf'];
 	pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
